@@ -1,7 +1,3 @@
-from stack import Stack
-from stack import EmptyStackError
-
-
 def check_parens(str):
     """
     check_parens takes a string and:
@@ -10,25 +6,22 @@ def check_parens(str):
     returns -1 if string has broken (unmatched) parentheses.
     """
 
-    stack = Stack()
+    counter = 0
     for i in range(len(str)):
-        # if loop encounters (, location is pushed to stack.
+        # if loop encounters (, counter is incremented
         if str[i] == '(':
-            stack.push(i)
-        # else if loop encounters ), attempt to pop from stack. If stack is
-        # empty, catch EmptyStackError and return -1. We have seen too many ).
+            counter += 1
+        # else if loop encounters ), decrement counter
         elif str[i] == ')':
-            try:
-                stack.pop()
-            except EmptyStackError:
+            if counter == 0:
                 return -1
-    # after going through str looking for parentheses, if there is anything
-    # left on the stack, we have too many (, but if we catch an EmptyStackError
-    # we know the parentheses were balanced.
-    try:
-        stack.pop()
+            else:
+                counter -= 1
+    # after going through str looking for parentheses, if counter still
+    # positive, we have too many (, but if counter 0 we have balanced parens.
+    if counter > 0:
         return 1
-    except EmptyStackError:
+    elif counter == 0:
         return 0
 '''
 def check_parens(str):
