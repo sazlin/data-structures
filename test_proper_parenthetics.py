@@ -42,4 +42,8 @@ def test_check_parens_broken3():
 
 
 def test_check_parens_invalid1():
-    assert check_parens(u')(')
+    assert check_parens(u')(') == -1
+
+
+def test_check_parens_invalid2():
+    assert check_parens(u'(dog(cat)),(foo(bar(baz)bar)foo))') == -1
