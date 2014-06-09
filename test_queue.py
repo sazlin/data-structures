@@ -1,4 +1,6 @@
 from queue import Queue
+from queue import EmptyQueueError
+import pytest
 
 
 def test_init():
@@ -36,3 +38,9 @@ def test_dequeue_1():
     test_queue.enqueue(1)
     test_queue.dequeue()
     assert test_queue.size() == 0
+
+
+def test_dequeue_2():
+    test_queue = Queue()
+    with pytest.raises(EmptyQueueError):
+        test_queue.dequeue()

@@ -1,6 +1,13 @@
 from linked_list import l_list, node
 
 
+class EmptyQueueError(Exception):
+    """An exception that is thrown when trying to dequeue an empty queue"""
+
+    def __init__(self, message):
+        Exception.__init__(self, message)
+
+
 class _Queue_List(l_list):
     def __init__(self):
         super(self.__class__, self).__init__()
@@ -42,6 +49,8 @@ class Queue(object):
 
     def dequeue(self):
         """remove and return an item from the Queue"""
+        if not self.size():
+            raise EmptyQueueError("Queue is empty")
         return self._ql.pop()
 
     def size(self):
