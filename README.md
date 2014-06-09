@@ -12,4 +12,5 @@ data-structures
 <h3>Implemented Data Structures</h3>
 <ul><li>linked list as l_list class</li>
 <li>stack as Stack class</li>
+<li>queue as Queue class</li>
 </ul>
