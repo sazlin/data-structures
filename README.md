@@ -27,5 +27,5 @@ Strengths:
 
 Weaknesses:
 * Removing an arbitrary value in the list is O(n) worst case ( Remove() )
-* Insertion at arbitrary point in list is O(n) worst case
+* Our implementation doesn't allow insertion other than at the head or tail, but if it did the insertion time complexity would be O(n) worst case
 * Our implementation doesn't have a way to access values that aren't at the head or tail. If it did, the search would be O(n)
