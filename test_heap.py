@@ -11,21 +11,14 @@ def create_empty_min_heap():
 @pytest.fixture(scope='function')
 def create_2_item_heap():
     from min_heap import MinHeap
-    two_item_heap = MinHeap()
-    two_item_heap.push(1)
-    two_item_heap.push(2)
+    two_item_heap = MinHeap([1, 2])
     return two_item_heap
 
 
 @pytest.fixture(scope='function')
 def create_5_item_heap():
     from min_heap import MinHeap
-    five_item_heap = MinHeap()
-    five_item_heap.push(1)
-    five_item_heap.push(2)
-    five_item_heap.push(3)
-    five_item_heap.push(4)
-    five_item_heap.push(5)
+    five_item_heap = MinHeap([1, 2, 3, 4, 5])
     return five_item_heap
 
 
@@ -164,8 +157,9 @@ def test_find_right_child_large_heap(create_5_item_heap):
     assert create_5_item_heap._find_right_child(2) is None
     assert create_5_item_heap._find_right_child(1) == 4
 
-
+"""
 def test_play():
     test_list = range(1, 6)
     for x in range(len(test_list)):
         assert test_list[x] == x + 1
+"""

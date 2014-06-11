@@ -49,10 +49,12 @@ class MinHeap(object):
         """
         given an index i, finds the index of the left child of i.
         """
-        pass
+        child = (2 * i) + 1
+        return None if child >= len(self._list) else child
 
     def _find_right_child(self, i):
         """
         given an index i, finds the index of the right child of i
         """
-        pass
+        child = (2 * i) + 2
+        return None if child >= len(self._list) else child
