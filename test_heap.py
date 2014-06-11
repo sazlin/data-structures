@@ -119,6 +119,52 @@ def test_peek_on_not_empty_heap(create_2_item_heap):
     assert create_2_item_heap.peek() == 1
 
 
+def test_swap():
+    from min_heap import MinHeap
+    two_item_heap = MinHeap([1, 2])
+    two_item_heap._swap(0, 1)
+    assert two_item_heap._list[0] == 2
+    assert two_item_heap._list[1] == 1
+
+
+def test_find_parent(create_empty_min_heap):
+    assert create_empty_min_heap._find_parent(4) == 1
+    assert create_empty_min_heap._find_parent(0) is None
+    assert create_empty_min_heap._find_parent(5) == 2
+
+
+def test_find_left_child_empty_heap(create_empty_min_heap):
+    assert create_empty_min_heap._find_left_child(0) is None
+    assert create_empty_min_heap._find_left_child(1) is None
+
+
+def test_find_left_child_small_heap(create_2_item_heap):
+    assert create_2_item_heap._find_left_child(0) == 1
+    assert create_2_item_heap._find_left_child(1) is None
+
+
+def test_find_left_child_large_heap(create_5_item_heap):
+    assert create_5_item_heap._find_left_child(0) == 1
+    assert create_5_item_heap._find_left_child(2) is None
+    assert create_5_item_heap._find_left_child(1) == 3
+
+
+def test_find_right_child_empty_heap(create_empty_min_heap):
+    assert create_empty_min_heap._find_right_child(0) is None
+    assert create_empty_min_heap._find_right_child(1) is None
+
+
+def test_find_right_child_small_heap(create_2_item_heap):
+    assert create_2_item_heap._find_right_child(0) is None
+    assert create_2_item_heap._find_right_child(1) is None
+
+
+def test_find_right_child_large_heap(create_5_item_heap):
+    assert create_5_item_heap._find_right_child(0) == 2
+    assert create_5_item_heap._find_right_child(2) is None
+    assert create_5_item_heap._find_right_child(1) == 4
+
+
 def test_play():
     test_list = range(1, 6)
     for x in range(len(test_list)):
