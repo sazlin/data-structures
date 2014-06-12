@@ -1,20 +1,24 @@
-data-structures
+# data-structures
 ===============
 
-<p>This repro holds sample code for a number of classic data structures implemented in Python.</p>
+### This repro holds sample code for a number of classic data structures implemented in Python.
 
-<h3>Co-Authors:</h3> 
-<ul><li>Perry Hook</li><li>Sean Azlin</li></ul>
-<h3>Source and inspirations:</h3><ul>
-<li>Python Reference Docs on Data Structures (https://docs.python.org/2/tutorial/datastructures.html)</li>
-<li>Ideas for creating a custom exception (http://stackoverflow.com/questions/1319615/proper-way-to-declare-custom-exceptions-in-modern-python)</li>
-</ul>
-<h3>Implemented Data Structures</h3>
-<ul><li>linked list as l_list class</li>
-<li>stack as Stack class</li>
-<li>queue as Queue class</li>
-<li>doubly linked list as DLinkedList</li>
-</ul>
+### Co-Authors:
+* Perry Hook
+* Sean Azlin
+
+### Source and inspirations:
+* Python Reference Docs on Data Structures (https://docs.python.org/2/tutorial/datastructures.html)
+* Ideas for creating a custom exception (http://stackoverflow.com/questions/1319615/proper-way-to-declare-custom-exceptions-in-modern-python)
+* Heap Visualization (http://www.cs.usfca.edu/~galles/JavascriptVisual/Heap.html)
+
+### Implemented Data Structures
+* linked list as l_list class
+* stack as Stack class
+* queue as Queue class
+* doubly linked list as DLinkedList
+* min binary heap
+
 
 ###Strength & Weakness of Each Data Structure
 ####Doubly Linked List:
