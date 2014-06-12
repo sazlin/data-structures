@@ -42,10 +42,10 @@ def test_init_with_unsorted_iterable(l=[5, 2, 1, 4, 3]):
     from min_heap import MinHeap
     mh = MinHeap(l)
     assert mh._list[0] == 1
-    assert mh._list[1] == 2
-    assert mh._list[2] == 3
+    assert mh._list[1] == 5
+    assert mh._list[2] == 2
     assert mh._list[3] == 4
-    assert mh._list[4] == 5
+    assert mh._list[4] == 3
 
 
 def test_push_on_empty_heap(create_empty_min_heap):

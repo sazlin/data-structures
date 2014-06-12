@@ -31,7 +31,15 @@ class MinHeap(object):
             self._swap(0, -1)
             # trim the root just moved to last position of list
             del self._list[-1]
-            self._heapify(0)
+            i = 0
+            has_smaller = True
+            while has_smaller:
+                smlr_idx = self._smaller_child(i)
+                if smlr_idx is None:
+                    break
+                else:
+                    self._swap(i, smlr_idx)
+                    i = smlr_idx
             return top
 
     def peek(self):
@@ -42,6 +50,12 @@ class MinHeap(object):
             return None
         else:
             return self._list[0]
+
+    def _smaller_child(self, p):
+        """
+        returns the smaller of a node's two children.  Returns None if
+        neither child is smaller.  If left = right, returns left.
+        """
 
     def _heapify(self, p):
         """
