@@ -11,6 +11,7 @@
 * Python Reference Docs on Data Structures (https://docs.python.org/2/tutorial/datastructures.html)
 * Ideas for creating a custom exception (http://stackoverflow.com/questions/1319615/proper-way-to-declare-custom-exceptions-in-modern-python)
 * Heap Visualization (http://www.cs.usfca.edu/~galles/JavascriptVisual/Heap.html)
+* Python Rich Comparison Methods (http://www.voidspace.org.uk/python/articles/comparison.shtml)
 
 ### Implemented Data Structures
 * linked list as l_list class
