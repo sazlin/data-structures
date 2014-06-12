@@ -86,18 +86,14 @@ class MinHeap(object):
         """
         # finds smaller child (is None if no smaller child)
         sc = self._smaller_child(n)
+        if sc is None:
+            return
         # if we have a smaller child
-        if sc is not None:
+        else:
             # swap local root node with smaller child
             self._swap(n, sc)
-            # move local root to old smaller child location
-            n = self._smaller_child(sc)
-            # if we moved to a leaf, stop
-            if n is None:
-                return
-            # otherwise keep trickling down in subtree
-            else:
-                self._trickle_down(n)
+            # keep trickling down in subtree
+            self._trickle_down(sc)
 
     def _heapify(self, p):
         """
