@@ -99,8 +99,11 @@ def test_pop_on_small_heap(create_2_item_heap):
 
 
 def test_pop_on_large_heap(create_5_item_heap):
-    for i in range(len(create_5_item_heap)):
-        assert create_5_item_heap.pop() == i + 1
+        assert create_5_item_heap.pop() == 1
+        assert create_5_item_heap.pop() == 2
+        assert create_5_item_heap.pop() == 3
+        assert create_5_item_heap.pop() == 4
+        assert create_5_item_heap.pop() == 5
 
 
 def test_peek_on_empty_heap(create_empty_min_heap):

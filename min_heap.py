@@ -5,31 +5,47 @@ class MinHeap(object):
         Initialize a heap, if iterable is passed initialize heap to
         contents of iterable, otherwise initialize empty heap.
         """
-        if iterable is None:
-            self._list = []
-        else:
-            self._list = iterable
-            self._heapify()
+        self._list = []
+        if iterable is not None:
+            for item in iterable:
+                self.push(item)
 
     def push(self, val):
         """
         Puts a new value into the heap, maintaining the heap property.
         """
-        pass
+        self._list.append(val)
+        # print "in push, _list is: {}".format(self._list)
+        self._percolate_up(len(self._list) - 1)
 
     def pop(self):
         """
         Removes the "top" value in the heap, maintaining the heap property.
         """
-        pass
+        if len(self._list) == 0:
+            return None
+        else:
+            top = self._list[0]
+            # replace the root of the heap with the last element
+            # of the last level
+            self._swap(0, -1)
+            # trim the root just moved to last position of list
+            del self._list[-1]
+            self._heapify(0)
+            return top
 
     def peek(self):
         """
-        Returns the value of the top of the heap, without removal.
+        returns the value of the top node without removing it.
         """
-    def _heapify(self):
+        if len(self._list) == 0:
+            return None
+        else:
+            return self._list[0]
+
+    def _heapify(self, p):
         """
-        turns the list into a heap.
+        turns an tree into a heap efficiently
         """
         pass
 
@@ -58,3 +74,16 @@ class MinHeap(object):
         """
         child = (2 * i) + 2
         return None if child >= len(self._list) else child
+
+    def _percolate_up(self, i):
+        """
+        percolates up the value at index i
+        """
+        parent_idx = self._find_parent(i)
+        # print "in _percolate_up({0}) and parent_idx is {1}".format(
+        #    i, parent_idx)
+        if parent_idx is None or self._list[i] >= self._list[parent_idx]:
+            return
+        else:
+            self._swap(i, parent_idx)
+            self._percolate_up(parent_idx)
