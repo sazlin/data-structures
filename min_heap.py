@@ -95,12 +95,6 @@ class MinHeap(object):
             # keep trickling down in subtree
             self._trickle_down(sc)
 
-    def _heapify(self, p):
-        """
-        turns an tree into a heap efficiently
-        """
-        pass
-
     def _swap(self, i, j):
         """
         swaps the items in _list at indexes i and j.
