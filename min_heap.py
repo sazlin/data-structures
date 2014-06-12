@@ -1,6 +1,3 @@
-import pdb
-
-
 class MinHeap(object):
 
     def __init__(self, iterable=None):
@@ -18,7 +15,6 @@ class MinHeap(object):
         Puts a new value into the heap, maintaining the heap property.
         """
         self._list.append(val)
-        # print "in push, _list is: {}".format(self._list)
         self._percolate_up(len(self._list) - 1)
 
     def pop(self):
@@ -65,32 +61,20 @@ class MinHeap(object):
             lc_val = self._list[lc_loc]
         if has_rc:
             rc_val = self._list[rc_loc]
-        # print "p is {}".format(p)
-        # print "lc_loc is {}".format(lc_loc)
-        # print "rc_loc is {}".format(rc_loc)
-        # print "lc_val is {}".format(lc_val)
-        # print "rc_val is {}".format(rc_val)
-        # print "has_lc is {}".format(has_lc)
-        # print "has_rc is {}".format(has_rc)
-
         # case1 where we have no left child or right child
         if not (has_lc or has_rc):
-            # print "in case1"
             return None
         # case2 where we have both left and right child
         elif (has_lc and has_rc):
-            # print "in case2"
             if (lc_val <= rc_val):
                 return lc_loc if lc_val < self._list[p] else None
             else:
                 return rc_loc if rc_val < self._list[p] else None
         # case3 where we only have left child
         elif has_lc:
-            # print "in case3"
             return lc_loc if lc_val < self._list[p] else None
         # case4 where we only have right child
         else:
-            # print "in case4"
             return rc_loc if rc_val < self._list[p] else None
 
     def _trickle_down(self, n):
@@ -100,18 +84,18 @@ class MinHeap(object):
         calls _trickle_down on child's old location
         otherwise it returns.
         """
-        print "n={}".format(n)
+        # finds smaller child (is None if no smaller child)
         sc = self._smaller_child(n)
-        print "outside of while loop, sc={}".format(sc)
-        # pdb.set_trace()
+        # if we have a smaller child
         if sc is not None:
+            # swap local root node with smaller child
             self._swap(n, sc)
-            print "just swapped, sc={} calling trickle_down(sc)".format(sc)
-            sc = self._smaller_child(sc)
-            if sc is None:
+            # move local root to old smaller child location
+            n = self._smaller_child(sc)
+            if n is None:
                 return
             else:
-                self._trickle_down(sc)
+                self._trickle_down(n)
 
     def _heapify(self, p):
         """
