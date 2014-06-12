@@ -22,6 +22,14 @@ def create_5_item_heap():
     return five_item_heap
 
 
+@pytest.fixture(scope='function')
+def create_really_big_list_unsorted_item_heap():
+    from min_heap import MinHeap
+    really_big_heap = MinHeap(
+        [5, 4, 8, 10, 45, 23, 4, 7, 6, 51, 2, 3, 4, 5, 3, 0, 1, -1])
+    return really_big_heap
+
+
 def test_init_no_iterable():
     from min_heap import MinHeap
     mh = MinHeap()
@@ -99,11 +107,32 @@ def test_pop_on_small_heap(create_2_item_heap):
 
 
 def test_pop_on_large_heap(create_5_item_heap):
-        assert create_5_item_heap.pop() == 1
-        assert create_5_item_heap.pop() == 2
-        assert create_5_item_heap.pop() == 3
-        assert create_5_item_heap.pop() == 4
-        assert create_5_item_heap.pop() == 5
+    assert create_5_item_heap.pop() == 1
+    assert create_5_item_heap.pop() == 2
+    assert create_5_item_heap.pop() == 3
+    assert create_5_item_heap.pop() == 4
+    assert create_5_item_heap.pop() == 5
+
+
+def test_pop_on_big_unsorted_heap(create_really_big_list_unsorted_item_heap):
+    assert create_really_big_list_unsorted_item_heap.pop() == -1
+    assert create_really_big_list_unsorted_item_heap.pop() == 0
+    assert create_really_big_list_unsorted_item_heap.pop() == 1
+    assert create_really_big_list_unsorted_item_heap.pop() == 2
+    assert create_really_big_list_unsorted_item_heap.pop() == 3
+    assert create_really_big_list_unsorted_item_heap.pop() == 3
+    assert create_really_big_list_unsorted_item_heap.pop() == 4
+    assert create_really_big_list_unsorted_item_heap.pop() == 4
+    assert create_really_big_list_unsorted_item_heap.pop() == 4
+    assert create_really_big_list_unsorted_item_heap.pop() == 5
+    assert create_really_big_list_unsorted_item_heap.pop() == 5
+    assert create_really_big_list_unsorted_item_heap.pop() == 6
+    assert create_really_big_list_unsorted_item_heap.pop() == 7
+    assert create_really_big_list_unsorted_item_heap.pop() == 8
+    assert create_really_big_list_unsorted_item_heap.pop() == 10
+    assert create_really_big_list_unsorted_item_heap.pop() == 23
+    assert create_really_big_list_unsorted_item_heap.pop() == 45
+    assert create_really_big_list_unsorted_item_heap.pop() == 51
 
 
 def test_peek_on_empty_heap(create_empty_min_heap):
