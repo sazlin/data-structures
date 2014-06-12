@@ -33,8 +33,8 @@ class MinHeap(object):
             top = self._list[0]
             # replace the root of the heap with the last element
             # of the last level
-            self._swap(0, -1)
-            # trim the root just moved to last position of list
+            self._list[0] = self._list[-1]
+            # trim the extra item off end of list
             del self._list[-1]
             self._trickle_down(0)
         return top
@@ -92,8 +92,10 @@ class MinHeap(object):
             self._swap(n, sc)
             # move local root to old smaller child location
             n = self._smaller_child(sc)
+            # if we moved to a leaf, stop
             if n is None:
                 return
+            # otherwise keep trickling down in subtree
             else:
                 self._trickle_down(n)
 
