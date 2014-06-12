@@ -42,10 +42,10 @@ def test_init_with_unsorted_iterable(l=[5, 2, 1, 4, 3]):
     from min_heap import MinHeap
     mh = MinHeap(l)
     assert mh._list[0] == 1
-    assert mh._list[1] == 5
+    assert mh._list[1] == 3
     assert mh._list[2] == 2
-    assert mh._list[3] == 4
-    assert mh._list[4] == 3
+    assert mh._list[3] == 5
+    assert mh._list[4] == 4
 
 
 def test_push_on_empty_heap(create_empty_min_heap):
@@ -160,6 +160,22 @@ def test_find_right_child_large_heap(create_5_item_heap):
     assert create_5_item_heap._find_right_child(2) is None
     assert create_5_item_heap._find_right_child(1) == 4
 
+
+def test_smaller_child(create_5_item_heap):
+    create_5_item_heap.push(9)
+    create_5_item_heap._list[0] = 3
+    create_5_item_heap._list[1] = 1
+    create_5_item_heap._list[2] = 2
+    create_5_item_heap._list[3] = 4
+    create_5_item_heap._list[4] = 5
+    create_5_item_heap._list[5] = 0
+    create_5_item_heap._print_list()
+    assert create_5_item_heap._smaller_child(0) == 1
+    assert create_5_item_heap._smaller_child(1) is None
+    assert create_5_item_heap._smaller_child(2) == 5
+    assert create_5_item_heap._smaller_child(3) is None
+    assert create_5_item_heap._smaller_child(4) is None
+    assert create_5_item_heap._smaller_child(5) is None
 """
 def test_play():
     test_list = range(1, 6)
