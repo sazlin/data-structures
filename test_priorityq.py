@@ -6,11 +6,11 @@ from priorityq import PrioritizedItem
 @pytest.fixture(scope="function")
 def get_pq():
     pq = PriorityQueue()
-    pq.insert(PrioritizedItem(3, 'low pri'))
-    pq.insert(PrioritizedItem(1, 'first pri'))
-    pq.insert(PrioritizedItem(3, 'also low pri'))
-    pq.insert(PrioritizedItem(2, 'second pri'))
-    pq.insert(PrioritizedItem(3, 'another low pri'))
+    pq.insert(PrioritizedItem(3, 'A'))
+    pq.insert(PrioritizedItem(1, 'B'))
+    pq.insert(PrioritizedItem(3, 'C'))
+    pq.insert(PrioritizedItem(2, 'D'))
+    pq.insert(PrioritizedItem(3, 'E'))
     return pq
 
 
@@ -25,36 +25,38 @@ def test_insert_1(get_pq):
 
 
 def test_pop_1(get_pq):
-    assert get_pq._heap.pop().value == 'first pri'
+    assert get_pq._heap.pop().value == 'B'
 
 
 def test_pop_2(get_pq):
     get_pq.pop()
-    assert get_pq.pop().value == 'second pri'
+    assert get_pq.pop().value == 'D'
 
 
 def test_pop_3(get_pq):
     """Ensure that items with same pri pop() in FIFO order"""
     get_pq.pop()
     get_pq.pop()
-    assert get_pq.pop().value == 'low pri'
+    assert get_pq.pop().value == 'A'
+    assert get_pq.pop().value == 'C'
 
 
 def test_peek_1(get_pq):
-    assert get_pq._heap.peek().value == 'first pri'
+    assert get_pq._heap.peek().value == 'B'
+    assert get_pq._heap.peek().value == 'B'
 
 
 def test_peek_2(get_pq):
     get_pq.pop()
-    assert get_pq.peek().value == 'second pri'
+    assert get_pq.peek().value == 'D'
 
 
 def test_peek_3(get_pq):
     get_pq.pop()
     get_pq.pop()
-    assert get_pq.peek().value == 'low pri'
+    assert get_pq.peek().value == 'A'
 
 
 def test_peek_4(get_pq):
     get_pq.peek()
-    assert get_pq._heap.peek().value == 'first pri'
+    assert get_pq._heap.peek().value == 'B'
