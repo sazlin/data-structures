@@ -1,6 +1,5 @@
 from min_heap import MinHeap
 from functools import total_ordering
-#import pdb
 
 
 @total_ordering
@@ -16,9 +15,6 @@ class PrioritizedItem(object):
                     return self._order == other._order
         return False
 
-    def __ne__(self, other):
-        return not self.__eq__(self, other)
-
     def __lt__(self, other):
         # this should cover __gt__ implicitly
         if hasattr(other, 'pri'):
@@ -26,19 +22,16 @@ class PrioritizedItem(object):
                 if hasattr(other, '_order'):
                     return self._order < other._order
                 else:
-                    raise Exception(
+                    raise AttributeError(
                         "right-most object must have an _order attr")
             return self.pri < other.pri
-        raise Exception("right-most object must have a pri attribute")
+        raise AttributeError("right-most object must have a pri attribute")
 
     def __str__(self):
-        return "{}{}{}".format(
+        return "[Pri:{},Value:{},_Order:{}]".format(
             str(self.pri),
             str(self.value),
             str(self._order))
-
-    def __cmp__(self, other):
-        return self.__eq__(other)
 
 
 class PriorityQueue(object):
@@ -53,7 +46,6 @@ class PriorityQueue(object):
     def insert(self, prioritized_item):
         prioritized_item._order = self. _gen_order()
         self._heap.push(prioritized_item)
-        #print self._heap._print_list()
 
     def pop(self):
         return self._heap.pop()
@@ -63,11 +55,7 @@ class PriorityQueue(object):
 
     def __str__(self):
         s = []
-        for item in self._heap._list:
-            s.append(str(item.pri))
-            s.append(str(item.value))
-            s.append(str(item._order))
-            s.append(", ")
+        [s.append(str(item)) for item in self._heap._list]
         return "".join(s)
 
 if __name__ == '__main__':

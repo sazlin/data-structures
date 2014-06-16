@@ -126,21 +126,9 @@ class MinHeap(object):
         percolates up the value at index i
         """
         parent_idx = self._find_parent(i)
-        # print "in _percolate_up({0}) and parent_idx is {1}".format(
-        #    i, parent_idx)
         if parent_idx is None or self._list[i] >= self._list[parent_idx]:
-            # if parent_idx is not None:
-            #     print "{}{}{}".format(
-            #         str(self._list[i]),
-            #         " is >= ",
-            #         str(self._list[parent_idx]))
             return
         else:
-            # print "{}{}{}".format(
-            #     str(self._list[i]),
-            #     " is < ",
-            #     str(self._list[parent_idx]))
-            # print "swap"
             self._swap(i, parent_idx)
             self._percolate_up(parent_idx)
 
