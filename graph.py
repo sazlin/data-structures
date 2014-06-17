@@ -89,8 +89,11 @@ class Graph(object):
         n2.edges.remove(edge)
         self.edge_list.remove(edge)
 
-    def had_node(self, n):
-        pass
+    def has_node(self, n):
+        for node in self.node_list:
+            if node == n:
+                return True
+        return False
 
     def neighbors(self, n):
         pass

@@ -112,3 +112,19 @@ def test_graph_del_edge(setup_simple_graph):
     assert len(q.edge_list) == 2
     assert len(deleted_edge_n1.edges) == 1
     assert len(deleted_edge_n2.edges) == 1
+
+
+def test_graph_has_node_1():
+    q = Graph()
+    new_node = Node(74782034)
+    assert not q.has_node(new_node)
+    q.node_list.append(new_node)
+    assert q.has_node(new_node)
+
+
+def test_graph_has_node_2(setup_simple_graph):
+    q = setup_simple_graph
+    new_node = Node(9812738921)
+    assert not q.has_node(new_node)
+    q.node_list.append(new_node)
+    assert q.has_node(new_node)
