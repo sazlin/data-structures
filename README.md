@@ -12,6 +12,7 @@
 * Ideas for creating a custom exception (http://stackoverflow.com/questions/1319615/proper-way-to-declare-custom-exceptions-in-modern-python)
 * Heap Visualization (http://www.cs.usfca.edu/~galles/JavascriptVisual/Heap.html)
 * Python Rich Comparison Methods (http://www.voidspace.org.uk/python/articles/comparison.shtml)
+* Adjacency Lists (http://en.wikipedia.org/wiki/Adjacency_list)
 
 ### Implemented Data Structures
 * linked list as l_list class
@@ -19,6 +20,7 @@
 * queue as Queue class
 * doubly linked list as DLinkedList
 * min binary heap
+* prioirity queue
 
 
 ###Strength & Weakness of Each Data Structure
@@ -37,3 +39,6 @@ Weaknesses:
 
 ####Min Binary Heap:
 The min binary heap is implemented using a list.  It can be constructed by passing an iterable upon creation, otherwise it is left empty.  The public interface includes methods for push(val), pop(), peek().  
+
+####Graph
+An object-oriented adjacency list-style implementation of a graph

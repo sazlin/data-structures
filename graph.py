@@ -7,6 +7,7 @@ class EdgeNotInGraphError(Exception):
 
 
 class Node(object):
+    """A simple node class for use with the Graph class"""
     def __init__(self, value):
         self.value = value
         self.edges = []
@@ -16,6 +17,7 @@ class Node(object):
 
 
 class Edge(object):
+    """A simple edge class for use with the Graph class"""
     def __init__(self, n1, n2):
         self.n1 = n1
         self.n2 = n2
@@ -33,7 +35,7 @@ class Edge(object):
 
 
 class Graph(object):
-    """A simple graph"""
+    """An object-oriented adjacency list-style implementation of a graph"""
     def __init__(self):
         self.edge_list = []
         self.node_list = []
