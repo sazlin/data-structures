@@ -2,6 +2,10 @@ class NodeNotInGraphError(Exception):
     pass
 
 
+class EdgeNotInGraphError(Exception):
+    pass
+
+
 class Node(object):
     def __init__(self, value):
         self.value = value
@@ -43,12 +47,17 @@ class Graph(object):
     def add_node(self, n):
         self.node_list.append(n)
 
-    def add_edge(self, n1, n2):
-        # first check to see if edge already exists. If it does, do nothing.
+    def _get_edge(self, n1, n2):
         for e in self.edge_list:
             if (e.n1 == n1 or e.n1 == n2) and \
                (e.n2 == n1 or e.n2 == n2):
-                return
+                return e
+        return None
+
+    def add_edge(self, n1, n2):
+        # first check to see if edge already exists. If it does, do nothing.
+        if self._get_edge(n1, n2) is not None:
+            return
         new_edge = Edge(n1, n2)
         self.edge_list.append(new_edge)
         n1.edges.append(new_edge)
@@ -72,7 +81,13 @@ class Graph(object):
         [n.edges.remove(edge) for edge in n.edges]
 
     def del_edge(self, n1, n2):
-        pass
+        #get the edge object for this edge
+        edge = self._get_edge(n1, n2)
+        if edge is None:
+            raise EdgeNotInGraphError
+        n1.edges.remove(edge)
+        n2.edges.remove(edge)
+        self.edge_list.remove(edge)
 
     def had_node(self, n):
         pass
