@@ -13,9 +13,19 @@ def setup_simple_graph():
     g.node_list.append(n1)
     g.node_list.append(n2)
     g.node_list.append(n3)
-    g.edge_list.append(Edge(n1, n2))
-    g.edge_list.append(Edge(n2, n3))
-    g.edge_list.append(Edge(n1, n3))
+    eAB = Edge(n1, n2)
+    eBC = Edge(n2, n3)
+    eAC = Edge(n1, n3)
+    g.edge_list.append(eAB)
+    g.edge_list.append(eBC)
+    g.edge_list.append(eAC)
+
+    n1.edges.append(eAB)
+    n1.edges.append(eAC)
+    n2.edges.append(eAB)
+    n2.edges.append(eBC)
+    n3.edges.append(eAC)
+    n3.edges.append(eBC)
     return g
 
 
@@ -62,4 +72,29 @@ def test_graph_edges(setup_simple_graph):
 
 
 def test_graph_add_edge():
-    pass
+    g = Graph()
+    test_node1 = Node('A')
+    test_node2 = Node('B')
+    g.node_list.append(test_node1)
+    g.node_list.append(test_node2)
+    assert len(g.edge_list) == 0
+    assert len(test_node1.edges) == 0
+    assert len(test_node2.edges) == 0
+    g.add_edge(test_node1, test_node2)
+    g.add_edge(test_node1, test_node2)
+    g.add_edge(test_node1, test_node2)
+    assert len(g.edge_list) == 1
+    assert len(test_node1.edges) == 1
+    assert len(test_node2.edges) == 1
+
+
+def test_graph_del_node(setup_simple_graph):
+    q = setup_simple_graph
+    assert len(q.edge_list) == 3
+    assert len(q.node_list) == 3
+    deleted_node = q.node_list[0]
+    q.del_node(deleted_node)
+    assert len(q.node_list) == 2
+    assert len(q.edge_list) == 1  # 2 edges should have been deleted
+    assert len(q.node_list[0].edges) == 1
+    assert len(q.node_list[1].edges) == 1
