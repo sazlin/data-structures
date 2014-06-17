@@ -96,7 +96,10 @@ class Graph(object):
         return False
 
     def neighbors(self, n):
-        pass
+        if not self.has_node(n):
+            raise NodeNotInGraphError
+        return [edge.getNeighbor(n) for edge in n.edges]
+
 
     def adjacent(self, n1, n2):
         pass

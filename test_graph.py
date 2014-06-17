@@ -128,3 +128,11 @@ def test_graph_has_node_2(setup_simple_graph):
     assert not q.has_node(new_node)
     q.node_list.append(new_node)
     assert q.has_node(new_node)
+
+
+def test_graph_neighbors(setup_simple_graph):
+    q = setup_simple_graph
+    neighbors = q.neighbors(q.node_list[0])
+    assert q.node_list[1] in neighbors
+    assert q.node_list[2] in neighbors
+    assert q.node_list[0] not in neighbors
