@@ -136,3 +136,11 @@ def test_graph_neighbors(setup_simple_graph):
     assert q.node_list[1] in neighbors
     assert q.node_list[2] in neighbors
     assert q.node_list[0] not in neighbors
+
+
+def test_graph_adjacent(setup_simple_graph):
+    q = setup_simple_graph
+    new_node = Node(82390832)
+    q.node_list.append(new_node)
+    assert q.adjacent(q.node_list[0], q.node_list[1])
+    assert not q.adjacent(q.node_list[0], new_node)

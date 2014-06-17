@@ -100,6 +100,7 @@ class Graph(object):
             raise NodeNotInGraphError
         return [edge.getNeighbor(n) for edge in n.edges]
 
-
     def adjacent(self, n1, n2):
-        pass
+        if (not self.has_node(n1)) or (not self.has_node(n2)):
+            raise NodeNotInGraphError
+        return self._get_edge(n1, n2) is not None
