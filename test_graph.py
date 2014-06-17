@@ -98,3 +98,17 @@ def test_graph_del_node(setup_simple_graph):
     assert len(q.edge_list) == 1  # 2 edges should have been deleted
     assert len(q.node_list[0].edges) == 1
     assert len(q.node_list[1].edges) == 1
+
+
+def test_graph_del_edge(setup_simple_graph):
+    q = setup_simple_graph
+    deleted_edge_n1, deleted_edge_n2 = q.edge_list[0].n1, q.edge_list[0].n2
+    assert len(q.node_list) == 3
+    assert len(q.edge_list) == 3
+    assert len(deleted_edge_n1.edges) == 2
+    assert len(deleted_edge_n2.edges) == 2
+    q.del_edge(deleted_edge_n1, deleted_edge_n2)
+    assert len(q.node_list) == 3
+    assert len(q.edge_list) == 2
+    assert len(deleted_edge_n1.edges) == 1
+    assert len(deleted_edge_n2.edges) == 1

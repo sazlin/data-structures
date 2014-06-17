@@ -18,11 +18,6 @@ class Edge(object):
 
     def __eq__(self, other):
         return self is other
-        # if hasattr(other, 'n1'):
-        #     if self.n1 is other.n1:
-        #         if hasattr(other, 'n2'):
-        #             return self.n1 is other.n2
-        # return False
 
     def getNeighbor(self, n):
         if self.n1 == n:
