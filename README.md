@@ -21,6 +21,7 @@
 * doubly linked list as DLinkedList
 * min binary heap
 * prioirity queue
+* graph as Graph class
 
 
 ###Strength & Weakness of Each Data Structure
