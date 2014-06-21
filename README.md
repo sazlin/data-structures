@@ -7,12 +7,13 @@
 * Perry Hook
 * Sean Azlin
 
-### Source and inspirations:
+### Sources and inspirations:
 * Python Reference Docs on Data Structures (https://docs.python.org/2/tutorial/datastructures.html)
 * Ideas for creating a custom exception (http://stackoverflow.com/questions/1319615/proper-way-to-declare-custom-exceptions-in-modern-python)
 * Heap Visualization (http://www.cs.usfca.edu/~galles/JavascriptVisual/Heap.html)
 * Python Rich Comparison Methods (http://www.voidspace.org.uk/python/articles/comparison.shtml)
 * Adjacency Lists (http://en.wikipedia.org/wiki/Adjacency_list)
+* Example DFS and BFS Implementations (http://code.activestate.com/recipes/576723-dfs-and-bfs-graph-traversal/)
 
 ### Implemented Data Structures
 * linked list as l_list class

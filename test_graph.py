@@ -29,6 +29,24 @@ def setup_simple_graph():
     return g
 
 
+@pytest.fixture(scope="function")
+def setup_acyclic_graph(setup_simple_graph):
+    q = setup_simple_graph
+    A_node, B_node = q.node_list[0], q.node_list[1]
+    new_node = Node('D')
+    q.add_node(new_node)
+    q.add_edge(B_node, new_node)
+    return q
+
+
+@pytest.fixture(scope="function")
+def setup_cyclic_graph(setup_acyclic_graph):
+    q = setup_acyclic_graph
+    A_node, D_node = q.node_list[0], q.node_list[3]
+    q.add_edge(D_node, A_node)
+    return q
+
+
 def test_node_init():
     n = Node(123)
     assert n is not None
@@ -144,3 +162,22 @@ def test_graph_adjacent(setup_simple_graph):
     q.node_list.append(new_node)
     assert q.adjacent(q.node_list[0], q.node_list[1])
     assert not q.adjacent(q.node_list[0], new_node)
+
+
+def test_depth_first_traversal_acyclic(setup_acyclic_graph):
+    q = setup_acyclic_graph
+    traversed = q.depth_first_traversal(q.node_list[0])
+    print [str(i) for i in traversed]
+    assert traversed[0] == q.node_list[0]  # A
+    assert traversed[1] == q.node_list[1]  # B
+    assert traversed[2] == q.node_list[2]  # C
+    assert traversed[3] == q.node_list[3]  # D
+
+def test_depth_first_traversal_cyclic(setup_cyclic_graph):
+    q = setup_cyclic_graph
+    traversed = q.depth_first_traversal(q.node_list[0])
+    print [str(i) for i in traversed]
+    assert traversed[0] == q.node_list[0]  # A
+    assert traversed[1] == q.node_list[1]  # B
+    assert traversed[2] == q.node_list[2]  # C
+    assert traversed[3] == q.node_list[3]  # D

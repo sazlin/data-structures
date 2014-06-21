@@ -15,6 +15,9 @@ class Node(object):
     def __eq__(self, other):
         return self is other
 
+    def __str__(self):
+        return "[{}]".format(self.value)
+
 
 class Edge(object):
     """A simple edge class for use with the Graph class"""
@@ -106,3 +109,14 @@ class Graph(object):
         if (not self.has_node(n1)) or (not self.has_node(n2)):
             raise NodeNotInGraphError
         return self._get_edge(n1, n2) is not None
+
+    def depth_first_traversal(self, node, traversed=[]):
+        node.marked = True
+        #traversed.append(node)
+        traversed = traversed + [node]
+        for edge in node.edges:
+            if not hasattr(edge.getNeighbor(node), 'marked'):
+                traversed = self.depth_first_traversal(
+                    edge.getNeighbor(node),
+                    traversed)
+        return traversed
