@@ -1,4 +1,5 @@
 from Queue import Queue as Q
+from copy import deepcopy
 
 
 class NodeNotInGraphError(Exception):
@@ -127,26 +128,29 @@ class Graph(object):
     def breadth_first_traversal(self, node):
         q = Q()
         q.put(node)
-        node.marked = True
+        node.bmarked = True
         traversed = [node]
         while not q.empty():
             t = q.get()
             for n in self.neighbors(t):
-                if not hasattr(n, 'marked'):
+                if not hasattr(n, 'bmarked'):
                     q.put(n)
-                    n.marked = True
+                    n.bmarked = True
                     traversed.append(n)
+        for n in self.node_list:
+            if hasattr(n, 'bmarked'):
+                del n.bmarked
         return traversed
 
 if __name__ == '__main__':
 
     print "Building a seven item, cyclic graph..."
     print """
-                    A
-                   /|\
-                  B C D
-                 /|\ /
-                E F G
+                    A  \n
+                   /|\ \n
+                  B C D\n
+                 /|\ / \n
+                E F G  \n
     """
     g = Graph()
     n1 = Node('A')
@@ -197,10 +201,10 @@ if __name__ == '__main__':
     g.node_list[3].edges.append(eGD)
     g.node_list[6].edges.append(eGD)
 
-    d_traversal = g.depth_first_traversal(g.node_list[0])
     b_traversal = g.breadth_first_traversal(g.node_list[0])
+    d_traversal = g.depth_first_traversal(g.node_list[0])
 
-    print "depth traversal:"
-    print [i.value for i in d_traversal]
     print "breadth traversal:"
-    print [i.value for i in b_traversal]
+    print [item.value for item in b_traversal]
+    print "depth traversal:"
+    print [item.value for item in d_traversal]

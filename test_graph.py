@@ -304,5 +304,3 @@ def test_breadth_first_unconnected_graph(setup_unconnected_graph):
     assert len(traversed) == 2
     assert traversed[0] == g.node_list[0]  # 'A'
     assert traversed[1] == g.node_list[6]  # 'G'
-
-
