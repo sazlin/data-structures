@@ -14,6 +14,7 @@
 * Python Rich Comparison Methods (http://www.voidspace.org.uk/python/articles/comparison.shtml)
 * Adjacency Lists (http://en.wikipedia.org/wiki/Adjacency_list)
 * Example DFS and BFS Implementations (http://code.activestate.com/recipes/576723-dfs-and-bfs-graph-traversal/)
+* Wikipedia entry on graph traversal (http://en.wikipedia.org/wiki/Graph_traversal)
 
 ### Implemented Data Structures
 * linked list as l_list class
