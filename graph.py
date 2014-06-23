@@ -1,5 +1,4 @@
 from Queue import Queue as Q
-from copy import deepcopy
 
 
 class NodeNotInGraphError(Exception):
@@ -114,15 +113,23 @@ class Graph(object):
             raise NodeNotInGraphError
         return self._get_edge(n1, n2) is not None
 
-    def depth_first_traversal(self, node, traversed=[]):
+    def _depth_first_traversal(self, node, traversed=[]):
         node.marked = True
         # traversed.append(node)
         traversed = traversed + [node]
         for edge in node.edges:
             if not hasattr(edge.getNeighbor(node), 'marked'):
-                traversed = self.depth_first_traversal(
+                traversed = self._depth_first_traversal(
                     edge.getNeighbor(node),
                     traversed)
+        return traversed
+
+    def depth_first_traversal(self, node, traversed=[]):
+        traversed = self._depth_first_traversal(node, traversed)
+        #this is the first recursive call, so clean up
+        for n in self.node_list:
+            if hasattr(n, 'marked'):
+                del n.marked
         return traversed
 
     def breadth_first_traversal(self, node):

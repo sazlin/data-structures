@@ -14,18 +14,14 @@ def setup_simple_graph():
     g.node_list.append(n2)
     g.node_list.append(n3)
     eAB = Edge(n1, n2)
-    eBC = Edge(n2, n3)
     eAC = Edge(n1, n3)
     g.edge_list.append(eAB)
-    g.edge_list.append(eBC)
     g.edge_list.append(eAC)
 
     n1.edges.append(eAB)
     n1.edges.append(eAC)
     n2.edges.append(eAB)
-    n2.edges.append(eBC)
     n3.edges.append(eAC)
-    n3.edges.append(eBC)
     return g
 
 
@@ -164,13 +160,11 @@ def test_graph_nodes(setup_simple_graph):
 def test_graph_edges(setup_simple_graph):
     g = setup_simple_graph
     edges = g.edges()
-    assert len(edges) == 3
+    assert len(edges) == 2
     assert edges[0].n1.value == 'A'
     assert edges[0].n2.value == 'B'
-    assert edges[1].n1.value == 'B'
+    assert edges[1].n1.value == 'A'
     assert edges[1].n2.value == 'C'
-    assert edges[2].n1.value == 'A'
-    assert edges[2].n2.value == 'C'
 
 
 def test_graph_add_edge():
@@ -192,28 +186,28 @@ def test_graph_add_edge():
 
 def test_graph_del_node(setup_simple_graph):
     q = setup_simple_graph
-    assert len(q.edge_list) == 3
+    assert len(q.edge_list) == 2
     assert len(q.node_list) == 3
     deleted_node = q.node_list[0]
     q.del_node(deleted_node)
     assert len(q.node_list) == 2
-    assert len(q.edge_list) == 1  # 2 edges should have been deleted
-    assert len(q.node_list[0].edges) == 1
-    assert len(q.node_list[1].edges) == 1
+    assert len(q.edge_list) == 0  # both edges should have been deleted
+    assert len(q.node_list[0].edges) == 0
+    assert len(q.node_list[1].edges) == 0
 
 
 def test_graph_del_edge(setup_simple_graph):
     q = setup_simple_graph
     deleted_edge_n1, deleted_edge_n2 = q.edge_list[0].n1, q.edge_list[0].n2
     assert len(q.node_list) == 3
-    assert len(q.edge_list) == 3
+    assert len(q.edge_list) == 2
     assert len(deleted_edge_n1.edges) == 2
-    assert len(deleted_edge_n2.edges) == 2
+    assert len(deleted_edge_n2.edges) == 1
     q.del_edge(deleted_edge_n1, deleted_edge_n2)
     assert len(q.node_list) == 3
-    assert len(q.edge_list) == 2
+    assert len(q.edge_list) == 1
     assert len(deleted_edge_n1.edges) == 1
-    assert len(deleted_edge_n2.edges) == 1
+    assert len(deleted_edge_n2.edges) == 0
 
 
 def test_graph_has_node_1():
@@ -254,8 +248,8 @@ def test_depth_first_traversal_acyclic(setup_acyclic_graph):
     print [str(i) for i in traversed]
     assert traversed[0] == q.node_list[0]  # A
     assert traversed[1] == q.node_list[1]  # B
-    assert traversed[2] == q.node_list[2]  # C
-    assert traversed[3] == q.node_list[3]  # D
+    assert traversed[2] == q.node_list[3]  # D
+    assert traversed[3] == q.node_list[2]  # C
 
 
 def test_depth_first_traversal_cyclic(setup_cyclic_graph):
@@ -264,9 +258,23 @@ def test_depth_first_traversal_cyclic(setup_cyclic_graph):
     print [str(i) for i in traversed]
     assert traversed[0] == q.node_list[0]  # A
     assert traversed[1] == q.node_list[1]  # B
-    assert traversed[2] == q.node_list[2]  # C
-    assert traversed[3] == q.node_list[3]  # D
+    assert traversed[2] == q.node_list[3]  # D
+    assert traversed[3] == q.node_list[2]  # C
 
+
+def test_depth_first_traversal_multiple_runs(setup_cyclic_graph):
+    q = setup_cyclic_graph
+    traversed1 = q.depth_first_traversal(q.node_list[0])
+    traversed2 = q.depth_first_traversal(q.node_list[0])
+    traversed3 = q.depth_first_traversal(q.node_list[0])
+    traversed4 = q.depth_first_traversal(q.node_list[0])
+    assert len(traversed2) == len(traversed1)
+    assert len(traversed3) == len(traversed1)
+    assert len(traversed4) == len(traversed1)
+    for i in range(len(traversed1)):
+        assert traversed2[i] == traversed1[i]
+        assert traversed3[i] == traversed1[i]
+        assert traversed4[i] == traversed1[i]
 
 def test_breadth_first_traversal_acyclic(setup_7_item_acyclic_graph):
     g = setup_7_item_acyclic_graph
