@@ -127,30 +127,13 @@ class Graph(object):
     def breadth_first_traversal(self, node):
         q = Q()
         q.put(node)
-        print node
         node.marked = True
         traversed = [node]
-        print node
-        print "traversed is: {0}".format(traversed)
         while not q.empty():
-            print "in while loop"
-            print "q size is {}".format(q.qsize())
-            print "traversed is {}".format(traversed)
             t = q.get()
-            print "t is {}".format(t)
             for n in self.neighbors(t):
-                """
-                print "in for loop"
-                print "t is: {}".format(t.value)
-                print "edge.n1 is {}".format(edge.n1)
-                print "edge.n2 is {}".format(edge.n2)
-                """
-                # n = edge.getNeighbor(t)
-                print "n is {}".format(n)
                 if not hasattr(n, 'marked'):
-                    print "{0} is not marked".format(n)
+                    q.put(n)
                     n.marked = True
                     traversed.append(n)
-                    print "enqueing {}".format(n.value)
-                    q.put(n)
         return traversed
