@@ -1,3 +1,6 @@
+from Queue import Queue as Q
+
+
 class NodeNotInGraphError(Exception):
     pass
 
@@ -69,24 +72,24 @@ class Graph(object):
         n2.edges.append(new_edge)
 
     def del_node(self, n):
-        #first, determine if n is in the graph. If it is, remove it.
+        # first, determine if n is in the graph. If it is, remove it.
         try:
             self.node_list.remove(n)
         except ValueError:
-            #n isn't in graph, so raise an error
+            # n isn't in graph, so raise an error
             raise NodeNotInGraphError
 
-        #next, find n's neighbors and remove affected edges for them
+        # next, find n's neighbors and remove affected edges for them
         [edge.getNeighbor(n).edges.remove(edge) for edge in n.edges]
 
-        #then, remove the edges from the graph's edge list
+        # then, remove the edges from the graph's edge list
         [self.edge_list.remove(edge) for edge in n.edges]
 
-        #lastly, remove the affected edges from the node being removed
+        # lastly, remove the affected edges from the node being removed
         [n.edges.remove(edge) for edge in n.edges]
 
     def del_edge(self, n1, n2):
-        #get the edge object for this edge
+        # get the edge object for this edge
         edge = self._get_edge(n1, n2)
         if edge is None:
             raise EdgeNotInGraphError
@@ -112,11 +115,42 @@ class Graph(object):
 
     def depth_first_traversal(self, node, traversed=[]):
         node.marked = True
-        #traversed.append(node)
+        # traversed.append(node)
         traversed = traversed + [node]
         for edge in node.edges:
             if not hasattr(edge.getNeighbor(node), 'marked'):
                 traversed = self.depth_first_traversal(
                     edge.getNeighbor(node),
                     traversed)
+        return traversed
+
+    def breadth_first_traversal(self, node):
+        q = Q()
+        q.put(node)
+        print node
+        node.marked = True
+        traversed = [node]
+        print node
+        print "traversed is: {0}".format(traversed)
+        while not q.empty():
+            print "in while loop"
+            print "q size is {}".format(q.qsize())
+            print "traversed is {}".format(traversed)
+            t = q.get()
+            print "t is {}".format(t)
+            for n in self.neighbors(t):
+                """
+                print "in for loop"
+                print "t is: {}".format(t.value)
+                print "edge.n1 is {}".format(edge.n1)
+                print "edge.n2 is {}".format(edge.n2)
+                """
+                # n = edge.getNeighbor(t)
+                print "n is {}".format(n)
+                if not hasattr(n, 'marked'):
+                    print "{0} is not marked".format(n)
+                    n.marked = True
+                    traversed.append(n)
+                    print "enqueing {}".format(n.value)
+                    q.put(n)
         return traversed

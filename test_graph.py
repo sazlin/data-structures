@@ -30,6 +30,53 @@ def setup_simple_graph():
 
 
 @pytest.fixture(scope="function")
+def setup_7_item_acyclic_branch():
+    g = Graph()
+    n1 = Node('A')
+    n2 = Node('B')
+    n3 = Node('C')
+    n4 = Node('D')
+    n5 = Node('E')
+    n6 = Node('F')
+    n7 = Node('G')
+
+    g.node_list.append(n1)
+    g.node_list.append(n2)
+    g.node_list.append(n3)
+    g.node_list.append(n4)
+    g.node_list.append(n5)
+    g.node_list.append(n6)
+    g.node_list.append(n7)
+
+    eAB = Edge(n1, n2)
+    eAC = Edge(n1, n3)
+    eAD = Edge(n1, n4)
+    eBE = Edge(n2, n5)
+    eBF = Edge(n2, n6)
+    eBG = Edge(n2, n7)
+    g.edge_list.append(eAB)
+    g.edge_list.append(eAC)
+    g.edge_list.append(eAD)
+    g.edge_list.append(eBE)
+    g.edge_list.append(eBF)
+    g.edge_list.append(eBG)
+
+    n1.edges.append(eAB)
+    n1.edges.append(eAC)
+    n1.edges.append(eAD)
+    n2.edges.append(eAB)
+    n2.edges.append(eBE)
+    n2.edges.append(eBF)
+    n2.edges.append(eBG)
+    n3.edges.append(eAC)
+    n4.edges.append(eAD)
+    n5.edges.append(eBE)
+    n6.edges.append(eBF)
+    n7.edges.append(eBG)
+    return g
+
+
+@pytest.fixture(scope="function")
 def setup_acyclic_graph(setup_simple_graph):
     q = setup_simple_graph
     A_node, B_node = q.node_list[0], q.node_list[1]
@@ -181,3 +228,32 @@ def test_depth_first_traversal_cyclic(setup_cyclic_graph):
     assert traversed[1] == q.node_list[1]  # B
     assert traversed[2] == q.node_list[2]  # C
     assert traversed[3] == q.node_list[3]  # D
+
+
+def test_breadth_first_traversal_acyclic(setup_7_item_acyclic_branch):
+    g = setup_7_item_acyclic_branch
+    traversed = g.breadth_first_traversal(g.node_list[0])
+    assert traversed[0] == g.node_list[0]  # 'A'
+    assert traversed[1] == g.node_list[1]  # 'B'
+    assert traversed[2] == g.node_list[2]  # 'C'
+    assert traversed[3] == g.node_list[3]  # 'D'
+    assert traversed[4] == g.node_list[4]  # 'E'
+    assert traversed[5] == g.node_list[5]  # 'F'
+    assert traversed[6] == g.node_list[6]  # 'G'
+
+"""
+assert traversed[0] == g.node_list[0]  # A
+    assert traversed[1] == q.node_list[1]  # B
+    assert traversed[2] == q.node_list[2]  # C
+    assert traversed[3] == q.node_list[3]  # D
+"""
+"""
+def test_breadth_first_traversal_cyclic(setup_cyclic_graph):
+    q = setup_cyclic_graph
+    traversed = q.breadth_first_traversal(q.node_list[0])
+    print [str(i) for i in traversed]
+    assert traversed[0] == q.node_list[0]  # A
+    assert traversed[1] == q.node_list[1]  # B
+    assert traversed[2] == q.node_list[2]  # C
+    assert traversed[3] == q.node_list[3]  # D
+    """
