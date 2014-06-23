@@ -30,7 +30,7 @@ def setup_simple_graph():
 
 
 @pytest.fixture(scope="function")
-def setup_7_item_acyclic_branch():
+def setup_7_item_acyclic_graph():
     g = Graph()
     n1 = Node('A')
     n2 = Node('B')
@@ -77,15 +77,15 @@ def setup_7_item_acyclic_branch():
 
 
 @pytest.fixture(scope="function")
-def setup_7_item_cyclic_branch(setup_7_item_acyclic_branch):
+def setup_7_item_cyclic_graph(setup_7_item_acyclic_graph):
     g = Graph()
-    g = setup_7_item_acyclic_branch
-    n2 = g.node_list[1]
-    n7 = g.node_list[6]
-    eBG = Edge(n2, n7)
-    g.edge_list.append(eBG)
-    g.node_list[1].edges.append(eBG)
-    g.node_list[6].edges.append(eBG)
+    g = setup_7_item_acyclic_graph
+    n4 = g.node_list[3]  # 'D'
+    n7 = g.node_list[6]  # 'G'
+    eGD = Edge(n7, n4)
+    g.edge_list.append(eGD)
+    g.node_list[3].edges.append(eGD)
+    g.node_list[6].edges.append(eGD)
     return g
 
 
@@ -268,8 +268,8 @@ def test_depth_first_traversal_cyclic(setup_cyclic_graph):
     assert traversed[3] == q.node_list[3]  # D
 
 
-def test_breadth_first_traversal_acyclic(setup_7_item_acyclic_branch):
-    g = setup_7_item_acyclic_branch
+def test_breadth_first_traversal_acyclic(setup_7_item_acyclic_graph):
+    g = setup_7_item_acyclic_graph
     traversed = g.breadth_first_traversal(g.node_list[0])
     print "acyclic graph, breadth first"
     print [item.value for item in traversed]
@@ -282,8 +282,8 @@ def test_breadth_first_traversal_acyclic(setup_7_item_acyclic_branch):
     assert traversed[6] == g.node_list[6]  # 'G'
 
 
-def test_breadth_first_traversal_cyclic(setup_7_item_cyclic_branch):
-    g = setup_7_item_cyclic_branch
+def test_breadth_first_traversal_cyclic(setup_7_item_cyclic_graph):
+    g = setup_7_item_cyclic_graph
     traversed = g.breadth_first_traversal(g.node_list[0])
     print "cyclic graph, breadth_first"
     print [item.value for item in traversed]
@@ -301,3 +301,8 @@ def test_breadth_first_unconnected_graph(setup_unconnected_graph):
     traversed = g.breadth_first_traversal(g.node_list[0])
     print "unconnected graph, breadth first (only A and G connected)"
     print [item.value for item in traversed]
+    assert len(traversed) == 2
+    assert traversed[0] == g.node_list[0]  # 'A'
+    assert traversed[1] == g.node_list[6]  # 'G'
+
+

@@ -137,3 +137,70 @@ class Graph(object):
                     n.marked = True
                     traversed.append(n)
         return traversed
+
+if __name__ == '__main__':
+
+    print "Building a seven item, cyclic graph..."
+    print """
+                    A
+                   /|\
+                  B C D
+                 /|\ /
+                E F G
+    """
+    g = Graph()
+    n1 = Node('A')
+    n2 = Node('B')
+    n3 = Node('C')
+    n4 = Node('D')
+    n5 = Node('E')
+    n6 = Node('F')
+    n7 = Node('G')
+
+    g.node_list.append(n1)
+    g.node_list.append(n2)
+    g.node_list.append(n3)
+    g.node_list.append(n4)
+    g.node_list.append(n5)
+    g.node_list.append(n6)
+    g.node_list.append(n7)
+
+    eAB = Edge(n1, n2)
+    eAC = Edge(n1, n3)
+    eAD = Edge(n1, n4)
+    eBE = Edge(n2, n5)
+    eBF = Edge(n2, n6)
+    eBG = Edge(n2, n7)
+    g.edge_list.append(eAB)
+    g.edge_list.append(eAC)
+    g.edge_list.append(eAD)
+    g.edge_list.append(eBE)
+    g.edge_list.append(eBF)
+    g.edge_list.append(eBG)
+
+    n1.edges.append(eAB)
+    n1.edges.append(eAC)
+    n1.edges.append(eAD)
+    n2.edges.append(eAB)
+    n2.edges.append(eBE)
+    n2.edges.append(eBF)
+    n2.edges.append(eBG)
+    n3.edges.append(eAC)
+    n4.edges.append(eAD)
+    n5.edges.append(eBE)
+    n6.edges.append(eBF)
+    n7.edges.append(eBG)
+
+    # insert the cycle part
+    eGD = Edge(n7, n4)
+    g.edge_list.append(eGD)
+    g.node_list[3].edges.append(eGD)
+    g.node_list[6].edges.append(eGD)
+
+    d_traversal = g.depth_first_traversal(g.node_list[0])
+    b_traversal = g.breadth_first_traversal(g.node_list[0])
+
+    print "depth traversal:"
+    print [i.value for i in d_traversal]
+    print "breadth traversal:"
+    print [i.value for i in b_traversal]
