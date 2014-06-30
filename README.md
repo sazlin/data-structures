@@ -1,4 +1,4 @@
-# data-structures
+# data-structures [![Build Status](https://travis-ci.org/sazlin/data-structures.svg?branch=weighted)](https://travis-ci.org/sazlin/data-structures)
 ===============
 
 ### This repo holds sample code for a number of classic data structures implemented in Python.
