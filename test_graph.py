@@ -26,6 +26,18 @@ def setup_simple_graph():
 
 
 @pytest.fixture(scope="function")
+def setup_weighted_graph(setup_simple_graph):
+    g = setup_simple_graph
+    g.edge_list[0].weight = 2
+    g.edge_list[1].weight = 3
+    g.add_edge(g.node_list[1], g.node_list[2])
+    n4 = Node('D')
+    g.add_node(n4)
+    g.add_edge(g.node_list[2], n4, 5)
+    return g
+
+
+@pytest.fixture(scope="function")
 def setup_7_item_acyclic_graph():
     g = Graph()
     n1 = Node('A')
@@ -312,3 +324,11 @@ def test_breadth_first_unconnected_graph(setup_unconnected_graph):
     assert len(traversed) == 2
     assert traversed[0] == g.node_list[0]  # 'A'
     assert traversed[1] == g.node_list[6]  # 'G'
+
+
+def test_weighted_edges(setup_weighted_graph):
+    g = setup_weighted_graph
+    assert g.edge_list[0].weight == 2
+    assert g.edge_list[1].weight == 3
+    assert g.edge_list[2].weight == 1
+

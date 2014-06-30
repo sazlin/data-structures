@@ -24,9 +24,10 @@ class Node(object):
 
 class Edge(object):
     """A simple edge class for use with the Graph class"""
-    def __init__(self, n1, n2):
+    def __init__(self, n1, n2, w=1):
         self.n1 = n1
         self.n2 = n2
+        self.weight = w
 
     def __eq__(self, other):
         return self is other
@@ -62,11 +63,11 @@ class Graph(object):
                 return e
         return None
 
-    def add_edge(self, n1, n2):
+    def add_edge(self, n1, n2, weight=1):
         # first check to see if edge already exists. If it does, do nothing.
         if self._get_edge(n1, n2) is not None:
             return
-        new_edge = Edge(n1, n2)
+        new_edge = Edge(n1, n2, weight)
         self.edge_list.append(new_edge)
         n1.edges.append(new_edge)
         n2.edges.append(new_edge)
@@ -126,7 +127,7 @@ class Graph(object):
 
     def depth_first_traversal(self, node, traversed=[]):
         traversed = self._depth_first_traversal(node, traversed)
-        #this is the first recursive call, so clean up
+        # this is the first recursive call, so clean up
         for n in self.node_list:
             if hasattr(n, 'marked'):
                 del n.marked
