@@ -44,4 +44,9 @@ Weaknesses:
 The min binary heap is implemented using a list.  It can be constructed by passing an iterable upon creation, otherwise it is left empty.  The public interface includes methods for push(val), pop(), peek().  
 
 ####Graph
-An object-oriented adjacency list-style implementation of a graph
+An object-oriented adjacency list-style implementation of a graph.  Graph
+supports weighted edges between nodes.  By default, if no weight is specified,
+new edges will have weight 1.
+
+Graph has methods depth_first_traversal and breadth_first_traversal that return
+a list of the nodes visited, in order, during the traversal.
