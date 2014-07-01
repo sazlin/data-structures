@@ -107,6 +107,7 @@ def setup_big_weighted_graph(setup_7_item_cyclic_graph):
     g.edge_list[4].weight = 1
     g.edge_list[5].weight = 2
     g.edge_list[6].weight = 5
+    return g
 
 
 @pytest.fixture(scope="function")

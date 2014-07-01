@@ -150,6 +150,46 @@ class Graph(object):
                 del n.bmarked
         return traversed
 
+    def _min_dist(self, q, distance):
+        min_node = q[0]
+        for node in q:
+            if distance[node] < distance[min_node]:
+                min_node = node
+        return min_node
+
+    def shortest_path_dijkstra1(self, s, d):
+        """Reference implementation"""
+        distance, previous, q = {}, {}, []
+        distance[s] = 0
+        for node in self.node_list:
+            if node is not s:
+                distance[node] = float("inf")
+                previous[node] = None
+            q.append(node)
+
+        while q:
+            current_node = self._min_dist(q, distance)
+            q.remove(current_node)
+
+            for edge in current_node.edges:
+                neighbor = edge.getNeighbor(current_node)
+                cost = distance[current_node] + edge.weight
+                if cost < distance[neighbor]:
+                    distance[neighbor] = cost
+                    previous[neighbor] = current_node
+
+        if previous.get(d, None) is None:
+            return None  # there is no path to the destination node
+
+        shortest_path = []
+        current_node = d
+        while current_node in previous:
+            shortest_path.append(current_node)
+            current_node = previous[current_node]
+        shortest_path.append(s)
+        return shortest_path, distance[d]
+
+
 if __name__ == '__main__':
 
     print "Building a seven item, cyclic graph..."
