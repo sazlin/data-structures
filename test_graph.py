@@ -98,6 +98,18 @@ def setup_7_item_cyclic_graph(setup_7_item_acyclic_graph):
 
 
 @pytest.fixture(scope="function")
+def setup_big_weighted_graph(setup_7_item_cyclic_graph):
+    g = setup_7_item_cyclic_graph
+    g.edge_list[0].weight = 2
+    g.edge_list[1].weight = 1
+    g.edge_list[2].weight = 10
+    g.edge_list[3].weight = 9
+    g.edge_list[4].weight = 1
+    g.edge_list[5].weight = 2
+    g.edge_list[6].weight = 5
+
+
+@pytest.fixture(scope="function")
 def setup_unconnected_graph():
     g = Graph()
     n1 = Node('A')
@@ -331,4 +343,18 @@ def test_weighted_edges(setup_weighted_graph):
     assert g.edge_list[0].weight == 2
     assert g.edge_list[1].weight == 3
     assert g.edge_list[2].weight == 1
+
+
+def test_shortest_path_dijkstra_1(setup_big_weighted_graph):
+    g = setup_big_weighted_graph
+    node_A, node_D = g.node_list[0], g.node_list[3]
+
+    path, cost = g.shortest_path_dijkstra1(node_A, node_D)
+    assert path.pop().value == 'A'
+    assert path.pop().value == 'B'
+    assert path.pop().value == 'G'
+    assert path.pop().value == 'D'
+    assert cost == 9
+    with pytest.raises(IndexError):
+        path.pop()
 
