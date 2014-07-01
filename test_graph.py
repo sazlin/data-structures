@@ -301,6 +301,7 @@ def test_depth_first_traversal_multiple_runs(setup_cyclic_graph):
         assert traversed3[i] == traversed1[i]
         assert traversed4[i] == traversed1[i]
 
+
 def test_breadth_first_traversal_acyclic(setup_7_item_acyclic_graph):
     g = setup_7_item_acyclic_graph
     traversed = g.breadth_first_traversal(g.node_list[0])
@@ -359,3 +360,29 @@ def test_shortest_path_dijkstra_1(setup_big_weighted_graph):
     with pytest.raises(IndexError):
         path.pop()
 
+
+def test_shortest_path_dijkstra_2():
+    g = Graph()
+    a = Node('A')
+    b = Node('B')
+    g.node_list.append(a)
+    g.node_list.append(b)
+    assert g.shortest_path_dijkstra1(a, b) is None
+
+
+def test_shortest_path_dijkstra_3():
+    g = Graph()
+    a, b, c, d = Node('A'), Node('B'), Node('C'), Node('D')
+    g.add_node(a)
+    g.add_node(b)
+    g.add_node(c)
+    g.add_node(d)
+    g.add_edge(a, b)
+    g.add_edge(b, d)
+    g.add_edge(a, c)
+    g.add_edge(c, d)
+    path, cost = g.shortest_path_dijkstra1(a, d)
+    assert cost == 2
+    assert path.pop().value == 'A'
+    path.pop()
+    assert path.pop().value == 'D'
