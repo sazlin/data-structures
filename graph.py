@@ -9,6 +9,10 @@ class EdgeNotInGraphError(Exception):
     pass
 
 
+class NegativeWeightCycleError(Exception):
+    pass
+
+
 class Node(object):
     """A simple node class for use with the Graph class"""
     def __init__(self, value):
@@ -149,6 +153,74 @@ class Graph(object):
             if hasattr(n, 'bmarked'):
                 del n.bmarked
         return traversed
+
+    def _min_dist(self, q, distance):
+        min_node = q[0]
+        for node in q:
+            if distance[node] < distance[min_node]:
+                min_node = node
+        return min_node
+
+    def _build_path(self, previous, s, d):
+        shortest_path = []
+        current_node = d
+        while current_node in previous:
+            shortest_path.append(current_node)
+            current_node = previous[current_node]
+        if s not in previous:
+            shortest_path.append(s)
+        return shortest_path
+
+    def shortest_path_dijkstra(self, s, d):
+        """Reference implementation"""
+        distance, previous, q = {}, {}, []
+        distance[s] = 0
+        for node in self.node_list:
+            if node is not s:
+                distance[node] = float("inf")
+                previous[node] = None
+            q.append(node)
+
+        while q:
+            current_node = self._min_dist(q, distance)
+            q.remove(current_node)
+
+            for edge in current_node.edges:
+                neighbor = edge.getNeighbor(current_node)
+                cost = distance[current_node] + edge.weight
+                if cost < distance[neighbor]:
+                    distance[neighbor] = cost
+                    previous[neighbor] = current_node
+
+        if previous.get(d, None) is None:
+            return None  # there is no path to the destination node
+
+        return self._build_path(previous, s, d), distance[d]
+
+    def shortest_path_BellmanFord(self, s, d):
+        distance, previous = {}, {}
+        for node in self.node_list:
+            if node is s:
+                distance[s] = 0
+            else:
+                distance[node] = float("inf")
+            previous[node] = None
+
+        for i in range(1, len(self.node_list)):
+            for edge in self.edge_list:
+                u, v = edge.n1, edge.n2
+                cost = distance[u] + edge.weight
+                if cost < distance[v]:
+                    distance[v] = cost
+                    previous[v] = u
+
+        for edge in self.edge_list:
+            u, v = edge.n1, edge.n2
+            cost = distance[u] + edge.weight
+            if cost < distance[v]:
+                raise NegativeWeightCycleError()
+
+        return self._build_path(previous, s, d), distance[d]
 
 if __name__ == '__main__':
 

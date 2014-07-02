@@ -1,4 +1,4 @@
-from graph import Graph
+from graph import Graph, NegativeWeightCycleError
 from graph import Node
 from graph import Edge
 import pytest
@@ -94,6 +94,19 @@ def setup_7_item_cyclic_graph(setup_7_item_acyclic_graph):
     g.edge_list.append(eGD)
     g.node_list[3].edges.append(eGD)
     g.node_list[6].edges.append(eGD)
+    return g
+
+
+@pytest.fixture(scope="function")
+def setup_big_weighted_graph(setup_7_item_cyclic_graph):
+    g = setup_7_item_cyclic_graph
+    g.edge_list[0].weight = 2
+    g.edge_list[1].weight = 1
+    g.edge_list[2].weight = 10
+    g.edge_list[3].weight = 9
+    g.edge_list[4].weight = 1
+    g.edge_list[5].weight = 2
+    g.edge_list[6].weight = 5
     return g
 
 
@@ -288,6 +301,7 @@ def test_depth_first_traversal_multiple_runs(setup_cyclic_graph):
         assert traversed3[i] == traversed1[i]
         assert traversed4[i] == traversed1[i]
 
+
 def test_breadth_first_traversal_acyclic(setup_7_item_acyclic_graph):
     g = setup_7_item_acyclic_graph
     traversed = g.breadth_first_traversal(g.node_list[0])
@@ -332,3 +346,92 @@ def test_weighted_edges(setup_weighted_graph):
     assert g.edge_list[1].weight == 3
     assert g.edge_list[2].weight == 1
 
+
+def test_shortest_path_dijkstra_1(setup_big_weighted_graph):
+    g = setup_big_weighted_graph
+    node_A, node_D = g.node_list[0], g.node_list[3]
+
+    path, cost = g.shortest_path_dijkstra(node_A, node_D)
+    assert path.pop().value == 'A'
+    assert path.pop().value == 'B'
+    assert path.pop().value == 'G'
+    assert path.pop().value == 'D'
+    assert cost == 9
+    with pytest.raises(IndexError):
+        path.pop()
+
+
+def test_shortest_path_dijkstra_2():
+    g = Graph()
+    a = Node('A')
+    b = Node('B')
+    g.node_list.append(a)
+    g.node_list.append(b)
+    assert g.shortest_path_dijkstra(a, b) is None
+
+
+@pytest.fixture(scope="function")
+def setup_shortest_path_graph():
+    g = Graph()
+    a, b, c, d, e = Node('A'), Node('B'), Node('C'), Node('D'), Node('E')
+    g.add_node(a)
+    g.add_node(b)
+    g.add_node(c)
+    g.add_node(d)
+    g.add_node(e)
+    g.add_edge(a, b)
+    g.add_edge(b, d)
+    g.add_edge(a, c)
+    g.add_edge(c, d)
+    g.add_edge(d, e)
+    return g
+
+
+def test_shortest_path_dijkstra_3(setup_shortest_path_graph):
+    g = setup_shortest_path_graph
+    path, cost = g.shortest_path_dijkstra(g.node_list[0], g.node_list[4])
+    for n in path:
+        print n.value
+    assert cost == 3
+    assert path.pop().value == 'A'
+    path.pop()
+    assert path.pop().value == 'D'
+    assert path.pop().value == 'E'
+
+
+def test_shortest_path_bellmanford_1():
+    g = Graph()
+    node_a, node_b = Node('A'), Node('B')
+    g.add_node(node_a)
+    g.add_node(node_b)
+    g.add_edge(node_a, node_b, -1)
+    path, cost = g.shortest_path_BellmanFord(node_a, node_b)
+    assert cost == -1
+    assert path.pop().value == 'A'
+    assert path.pop().value == 'B'
+
+
+def test_short_path_bellmanford_2(setup_shortest_path_graph):
+    g = setup_shortest_path_graph
+    path, cost = g.shortest_path_BellmanFord(g.node_list[0], g.node_list[4])
+    for n in path:
+        print n.value
+    assert cost == 3
+    assert path.pop().value == 'A'
+    path.pop()
+    assert path.pop().value == 'D'
+    assert path.pop().value == 'E'
+
+
+def test_short_path_bellmanford_3(setup_shortest_path_graph):
+    print "Bellmanford3"
+    g = setup_shortest_path_graph
+    # g.edge_list[2].weight = -1
+    # g.edge_list[3].weight = -1
+    g.add_edge(g.node_list[3], g.node_list[0], -100)
+    with pytest.raises(NegativeWeightCycleError):
+        path, cost = g.shortest_path_BellmanFord(g.node_list[0], g.node_list[4])
+        print "\nin bellmanford2"
+        for n in path:
+            print n.value
+        print "done printing"
