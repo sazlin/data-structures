@@ -15,6 +15,8 @@
 * Adjacency Lists (http://en.wikipedia.org/wiki/Adjacency_list)
 * Example DFS and BFS Implementations (http://code.activestate.com/recipes/576723-dfs-and-bfs-graph-traversal/)
 * Wikipedia entry on graph traversal (http://en.wikipedia.org/wiki/Graph_traversal)
+* Wikipedia entry on Dijkstra's Algorithm (http://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)
+* Wikipedia entry on Bellman-Ford Algorithm (http://en.wikipedia.org/wiki/Bellman%E2%80%93Ford_algorithm)
 
 ### Implemented Data Structures
 * linked list as l_list class
@@ -56,3 +58,5 @@ For shortest path finding, the classic Dijkstra's algorithm is implemented as sh
 Also implemented is the Bellman-Ford shortest path algorithm, shortest_path_Bellman-Ford(source, destination), which adds shortest-path finding for graphs with negative weight edges.  Bellman-Ford works similarly to Dijkstra's in that providing a source and destination node will return a tuple containing the list which is the path, and the cost of that path.  Bellman-Ford will detect negative-weight cycles in a graph and raise a NegativeWeightCycleError.
 
 If you are finding a path in a graph with negative edge weights, use Bellman-Ford.  It is not as efficient as Dijkstra's algorithm, however, for graphs with all positive edge-weights.  Our implementation of Dijkstra runs in O(|V|^2) as we did not use a priority queue.  Bellman-Ford runs in O(|V||E|), since the "relaxation" step in Bellman-Ford must go through the all the edges in the graph.
+
+Both shortest path algorithms follow Wikipedia's pseudocode fairly closely.
