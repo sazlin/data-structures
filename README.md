@@ -50,3 +50,9 @@ new edges will have weight 1.
 
 Graph has methods depth_first_traversal and breadth_first_traversal that return
 a list of the nodes visited, in order, during the traversal.
+
+For shortest path finding, the classic Dijkstra's algorithm is implemented as shortest_path_dijkstra(source, destination) for a source and destination node.  This method returns a tuple containing a list of the nodes in the path (in reverse order - starting with the destination and working it's way back to the source) and the cost of that path.  
+
+Also implemented is the Bellman-Ford shortest path algorithm, shortest_path_Bellman-Ford(source, destination), which adds shortest-path finding for graphs with negative weight edges.  Bellman-Ford works similarly to Dijkstra's in that providing a source and destination node will return a tuple containing the list which is the path, and the cost of that path.  Bellman-Ford will detect negative-weight cycles in a graph and raise a NegativeWeightCycleError.
+
+If you are finding a path in a graph with negative edge weights, use Bellman-Ford.  It is not as efficient as Dijkstra's algorithm, however, for graphs with all positive edge-weights.  Our implementation of Dijkstra runs in O(|V|^2) as we did not use a priority queue.  Bellman-Ford runs in O(|V||E|), since the "relaxation" step in Bellman-Ford must go through the all the edges in the graph.
