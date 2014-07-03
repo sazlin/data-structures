@@ -101,6 +101,18 @@ class BinarySearchTree(object):
             ret_val -= self._depth(1, self.root.right)
         return ret_val
 
+    def in_order(self):
+
+        def _in_order(node):
+            if not node:
+                yield None
+            yield _in_order(node.left)
+            yield node.value
+            yield _in_order(node.right)
+
+        return _in_order(self.root)
+
+
 
 if __name__ == '__main__':
 
