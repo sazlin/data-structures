@@ -99,6 +99,5 @@ def test_in_order_3(degenerate_bst):
 
 def test_bf_1(optimal_bst):
     expected = [6, 4, 8, 2, 5, 7, 9]
-    #optimal_bst.breadth_first()
     actual = [item.value for item in optimal_bst.breadth_first()]
     assert expected == actual
