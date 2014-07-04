@@ -105,13 +105,16 @@ class BinarySearchTree(object):
         return self._in_order(self.root)
 
     def _in_order(self, node):
-        if node.left:
+        if node is None:
+            raise StopIteration()
+        else:
             for item in self._in_order(node.left):
                 yield item
-        yield node
-        if node.right:
+            yield node
             for item in self._in_order(node.right):
                 yield item
+
+
 
 
 if __name__ == '__main__':

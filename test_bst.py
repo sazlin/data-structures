@@ -75,11 +75,12 @@ def test_balance_right_heavy():
     bst = BinarySearchTree(contents)
     assert bst.balance() == -2
 
-"""
+
 def test_in_order_1(empty_bst):
     bst = empty_bst
-    assert bst.in_order() is None
-"""
+    expected = []
+    actual = [item.value for item in bst.in_order()]
+    assert expected == actual
 
 
 def test_in_order_2(optimal_bst):
@@ -87,5 +88,10 @@ def test_in_order_2(optimal_bst):
     expected = [2, 4, 5, 6, 7, 8, 9]
     actual = [item.value for item in bst.in_order()]
     assert expected == actual
-    the_next = bst.in_order().next()
-    print the_next.value
+
+
+def test_in_order_3(degenerate_bst):
+    bst = degenerate_bst
+    expected = [2, 4, 6]
+    actual = [item.value for item in bst.in_order()]
+    assert expected == actual
