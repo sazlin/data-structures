@@ -74,3 +74,16 @@ def test_balance_right_heavy():
     contents = [6, 8, 10]
     bst = BinarySearchTree(contents)
     assert bst.balance() == -2
+
+
+def test_post_order_1(empty_bst):
+    bst = empty_bst
+    with pytest.raises(StopIteration):
+        bst.post_order().next()
+
+
+def test_post_order_2(optimal_bst):
+    bst = optimal_bst
+    expected = [2, 5, 4, 7, 9, 8, 6]
+    actual = [i for i in bst.post_order()]
+    assert actual == expected

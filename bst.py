@@ -112,6 +112,16 @@ class BinarySearchTree(object):
             for right_subtree_val in self._pre_order(node.right):
                 yield right_subtree_val
 
+    def post_order(self):
+        return self._post_order(self.root)
+
+    def _post_order(self, node):
+        if node:
+            for left_subtree_val in self._post_order(node.left):
+                yield left_subtree_val
+            for right_subtree_val in self._post_order(node.right):
+                yield right_subtree_val
+            yield node.value
 
 if __name__ == '__main__':
 
