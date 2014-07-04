@@ -12,10 +12,10 @@ class BSTNode(object):
         self.right = right_child
 
     def __lt__(self, other):
-        return self._value < other.get_value()
+        return self.value < other.value
 
     def __eq__(self, other):
-        return self._value == other.get_value()
+        return self.value == other.value
 
     def is_root(self):
         return self.parent is None
@@ -102,16 +102,16 @@ class BinarySearchTree(object):
         return ret_val
 
     def in_order(self):
+        return self._in_order(self.root)
 
-        def _in_order(node):
-            if not node:
-                yield None
-            yield _in_order(node.left)
-            yield node.value
-            yield _in_order(node.right)
-
-        return _in_order(self.root)
-
+    def _in_order(self, node):
+        if node.left:
+            for item in self._in_order(node.left):
+                yield item
+        yield node
+        if node.right:
+            for item in self._in_order(node.right):
+                yield item
 
 
 if __name__ == '__main__':
