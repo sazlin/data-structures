@@ -1,5 +1,6 @@
 import timeit
 from functools import total_ordering
+import pdb
 
 
 @total_ordering
@@ -114,7 +115,24 @@ class BinarySearchTree(object):
             for item in self._in_order(node.right):
                 yield item
 
+    def breadth_first(self):
+        height = self.depth()
+        for level in xrange(1, height + 1):
+            self._yield_level(self.root, level)
 
+    def _yield_level(self, root, level):
+        # pdb.set_trace()
+        print "level is {}".format(level)
+        print "local_root is {}".format(root.value)
+        if root is None:
+            print "root.value is: {}".format(root.value)
+            print ""
+        if level == 1:
+            print "root.value is:"
+            print root.value
+        else:
+            self._yield_level(root.left, level-1)
+            self._yield_level(root.right, level-1)
 
 
 if __name__ == '__main__':
