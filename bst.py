@@ -104,34 +104,32 @@ class BinarySearchTree(object):
     def in_order(self):
         return self._in_order(self.root)
 
-    def _in_order(self, root):
-        if root is None:
-            raise StopIteration()
-        else:
-            for node in self._in_order(root.left):
-                yield node
-            yield root
-            for node in self._in_order(root.right):
-                yield node
+    def _in_order(self, node):
+        if node:
+            for left_subtree_value in self._in_order(node.left):
+                yield left_subtree_value
+            yield node.value
+            for right_subtree_value in self._in_order(node.right):
+                yield right_subtree_value
 
     def breadth_first(self):
         # adapted from
         # www.geeksforgeeks.org/level-order-tree-traversal/
         height = self.depth()
         for level in xrange(1, height+1):
-            for node in self._yield_level(self.root, level):
-                yield node
+            for value in self._yield_level(self.root, level):
+                yield value
 
     def _yield_level(self, root, level):
         if root is None:
             raise StopIteration()
         if level == 1:
-            yield root
+            yield root.value
         else:
-            for node in self._yield_level(root.left, level-1):
-                yield node
-            for node in self._yield_level(root.right, level-1):
-                yield node
+            for left_next_level in self._yield_level(root.left, level-1):
+                yield left_next_level
+            for right_next_level in self._yield_level(root.right, level-1):
+                yield right_next_level
 
 
 if __name__ == '__main__':
