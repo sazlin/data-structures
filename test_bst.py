@@ -92,37 +92,37 @@ def test_post_order_2(optimal_bst):
 def test_in_order_1(empty_bst):
     bst = empty_bst
     expected = []
-    actual = [item.value for item in bst.in_order()]
+    actual = [item for item in bst.in_order()]
     assert expected == actual
 
 
 def test_in_order_2(optimal_bst):
     bst = optimal_bst
     expected = [2, 4, 5, 6, 7, 8, 9]
-    actual = [item.value for item in bst.in_order()]
+    actual = [item for item in bst.in_order()]
     assert expected == actual
 
 
 def test_in_order_3(degenerate_bst):
     bst = degenerate_bst
     expected = [2, 4, 6]
-    actual = [item.value for item in bst.in_order()]
+    actual = [item for item in bst.in_order()]
     assert expected == actual
 
 
 def test_bf_1(empty_bst):
     expected = []
-    actual = [item.value for item in empty_bst.breadth_first()]
+    actual = [item for item in empty_bst.breadth_first()]
     assert expected == actual
 
 
 def test_bf_2(optimal_bst):
     expected = [6, 4, 8, 2, 5, 7, 9]
-    actual = [item.value for item in optimal_bst.breadth_first()]
+    actual = [item for item in optimal_bst.breadth_first()]
     assert expected == actual
 
 
 def test_bf_3(degenerate_bst):
     expected = [6, 4, 2]
-    actual = [item.value for item in degenerate_bst.breadth_first()]
+    actual = [item for item in degenerate_bst.breadth_first()]
     assert expected == actual
