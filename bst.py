@@ -12,10 +12,10 @@ class BSTNode(object):
         self.right = right_child
 
     def __lt__(self, other):
-        return self.value < other.get_value()
+        return self.value < other.value
 
     def __eq__(self, other):
-        return self.value == other.get_value()
+        return self.value == other.value
 
     def is_root(self):
         return self.parent is None
@@ -86,9 +86,9 @@ class BinarySearchTree(object):
     def _depth(self, current_depth, local_root):
         left_depth = right_depth = 0
         if local_root.left:
-            left_depth = self._depth(current_depth+1, local_root.left)
+            left_depth = self._depth(current_depth + 1, local_root.left)
         if local_root.right:
-            right_depth = self._depth(current_depth+1, local_root.right)
+            right_depth = self._depth(current_depth + 1, local_root.right)
         return max(current_depth, left_depth, right_depth)
 
     def balance(self):
@@ -122,6 +122,42 @@ class BinarySearchTree(object):
             for right_subtree_val in self._post_order(node.right):
                 yield right_subtree_val
             yield node.value
+
+    def in_order(self):
+        return self._in_order(self.root)
+
+    def _in_order(self, root):
+        if root is None:
+            raise StopIteration()
+        else:
+            for node in self._in_order(root.left):
+                yield node
+            yield root
+            for node in self._in_order(root.right):
+                yield node
+
+    def breadth_first(self):
+        # adapted from
+        # www.geeksforgeeks.org/level-order-tree-traversal/
+        return self._breadth_first()
+
+    def _breadth_first(self):
+        height = self.depth()
+        for level in xrange(1, height + 1):
+            for node in self._yield_level(self.root, level):
+                yield node
+
+    def _yield_level(self, root, level):
+        if root is None:
+            raise StopIteration()
+        if level == 1:
+            yield root
+        else:
+            for node in self._yield_level(root.left, level - 1):
+                yield node
+            for node in self._yield_level(root.right, level - 1):
+                yield node
+
 
 if __name__ == '__main__':
 
