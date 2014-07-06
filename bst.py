@@ -117,9 +117,6 @@ class BinarySearchTree(object):
     def breadth_first(self):
         # adapted from
         # www.geeksforgeeks.org/level-order-tree-traversal/
-        return self._breadth_first()
-
-    def _breadth_first(self):
         height = self.depth()
         for level in xrange(1, height+1):
             for node in self._yield_level(self.root, level):
