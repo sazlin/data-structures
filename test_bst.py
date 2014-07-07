@@ -133,19 +133,33 @@ def test_delete_node_1(empty_bst):
 
 
 def test_delete_node_2(optimal_bst):
+    #[6, 4, 8, 2, 5, 7, 9]
     bst = optimal_bst
-    test_val = 123
-    assert not bst.contains(test_val)
-    bst.insert(test_val)
-    assert bst.contains(test_val)
-    assert bst.delete(777) is None
-    assert not bst.contains(test_val)
+    leaf_test_val = 7
+    non_leaf_test_val = 4
+    assert bst.contains(leaf_test_val)
+    assert bst.contains(non_leaf_test_val)
+    assert bst.delete(leaf_test_val) is None
+    assert [val for val in bst.breadth_first()] == [6,4,8,2,5,9]
+    assert bst.delete(non_leaf_test_val) is None
+    assert [val for val in bst.breadth_first()] == [6,5,8,2,9]
 
 def test_delete_node_3(degenerate_bst):
     bst = degenerate_bst
-    test_val = 123
+    leaf_test_val = 2
+    non_leaf_test_val = 6
+    assert bst.contains(leaf_test_val)
+    assert bst.contains(non_leaf_test_val)
+    assert bst.delete(leaf_test_val) is None
+    assert [val for val in bst.breadth_first()] == [6,4]
+    assert bst.delete(non_leaf_test_val) is None
+    assert [val for val in bst.breadth_first()] == [4]
+
+def test_delete_node_4(degenerate_bst):
+    bst = degenerate_bst
+    test_val = 777
     assert not bst.contains(test_val)
-    bst.insert(test_val)
-    assert bst.contains(test_val)
+    before_delete = [val for val in bst.in_order()]
     assert bst.delete(777) is None
-    assert not bst.contains(test_val)
+    after_delete = [val for val in bst.in_order()]
+    assert before_delete == after_delete

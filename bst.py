@@ -153,6 +153,47 @@ class BinarySearchTree(object):
             for right_next_level in self._yield_level(root.right, level-1):
                 yield right_next_level
 
+    def delete(self, val):
+        self.root = self._delete(val, self.root)
+        return None
+
+    def _delete(self, val, node):
+
+        def _min_val(node):
+            if node.left:
+                return _min_val(node.left)
+            else:
+                return node.value
+
+        if not node:
+            #no child here, so return
+            return None
+
+        if node.value ==  val:
+            self._size -= 1
+            if node.left and node.right:
+                #both left and right children exist
+                node.value = _min_val(node.right)
+                node.right = self._delete(node.value, node.right)
+                return node
+            elif node.left and not node.right:
+                #only left child exists
+                return node.left
+            elif not node.left and node.right:
+                #only right child exists
+                return node.right
+            else:
+                #no children
+                return None
+        elif node.value < val:
+            if node.right:
+                node.right = self._delete(val, node.right)
+            return node
+        else:
+            if node.left:
+                node.left = self._delete(val, node.left)
+            return node
+
 
 if __name__ == '__main__':
 
