@@ -126,3 +126,26 @@ def test_bf_3(degenerate_bst):
     expected = [6, 4, 2]
     actual = [item for item in degenerate_bst.breadth_first()]
     assert expected == actual
+
+def test_delete_node_1(empty_bst):
+    bst= empty_bst
+    assert bst.delete(777) is None
+
+
+def test_delete_node_2(optimal_bst):
+    bst = optimal_bst
+    test_val = 123
+    assert not bst.contains(test_val)
+    bst.insert(test_val)
+    assert bst.contains(test_val)
+    assert bst.delete(777) is None
+    assert not bst.contains(test_val)
+
+def test_delete_node_3(degenerate_bst):
+    bst = degenerate_bst
+    test_val = 123
+    assert not bst.contains(test_val)
+    bst.insert(test_val)
+    assert bst.contains(test_val)
+    assert bst.delete(777) is None
+    assert not bst.contains(test_val)
