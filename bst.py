@@ -7,7 +7,6 @@ class BSTNode(object):
 
     def __init__(self, value, parent=None, left_child=None, right_child=None):
         self.value = value
-        self.parent = parent
         self.left = left_child
         self.right = right_child
 
@@ -16,12 +15,6 @@ class BSTNode(object):
 
     def __eq__(self, other):
         return self.value == other.value
-
-    def is_root(self):
-        return self.parent is None
-
-    def is_leaf(self):
-        return self.left is None and self.right is None
 
 
 class BinarySearchTree(object):
@@ -193,7 +186,6 @@ class BinarySearchTree(object):
             if node.left:
                 node.left = self._delete(val, node.left)
             return node
-
 
 if __name__ == '__main__':
 
