@@ -85,13 +85,16 @@ class BinarySearchTree(object):
         return max(current_depth, left_depth, right_depth)
 
     def balance(self):
+        return self._balance(self.root)
+
+    def _balance(self, node):
         ret_val = 0
-        if self.root is None:
+        if node is None:
             return ret_val
-        if self.root.left:
-            ret_val += self._depth(1, self.root.left)
-        if self.root.right:
-            ret_val -= self._depth(1, self.root.right)
+        if node.left:
+            ret_val += self._depth(1, node.left)
+        if node.right:
+            ret_val -= self._depth(1, node.right)
         return ret_val
 
     def pre_order(self):
