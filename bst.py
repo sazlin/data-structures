@@ -28,13 +28,16 @@ class BinarySearchTree(object):
     def size(self):
         return self._size
 
-    def insert(self, val):
+    def insert(self, val, balance=False):
         if self.root is None:
             self.root = BSTNode(val)
             self._size += 1
             return
         current_node = self.root
+        path = []
         while True:
+            if balance:
+                path.append(current_node)
             if current_node.value > val:
                 if current_node.left is not None:
                     current_node = current_node.left
@@ -51,7 +54,29 @@ class BinarySearchTree(object):
                     break
             else:
                 # val is already in BST
-                break
+                return
+
+        if balance:
+            # Ensure that the BST is balanced after each insertion
+            path.pop()  # We don't need to check the parent of the inserted node
+            if path:
+                # start with the grandparent of the inserted node
+                node = path.pop()
+            else:
+                return
+            while node:
+                if path:
+                    parent = path.pop()
+                    if node is parent.left:
+                        parent.left = self._avl(node)
+                    else:
+                        parent.right = self._avl(node)
+                    node = parent
+                else:
+                    #we're at the root of the BST
+                    self.root = self._avl(node)
+                    return
+
 
     def contains(self, val):
         if self.root is None:
@@ -98,21 +123,23 @@ class BinarySearchTree(object):
         return ret_val
 
     def avl(self):
-        self._avl(self.root)
+        self.root = self._avl(self.root)
 
     def _avl(self, node):
         #source: http://en.wikipedia.org/wiki/AVL_tree
-        if(self._balance(node) == 2):
+        current_node_balance = self._balance(node)
+        if(current_node_balance == 2):
             if(self._balance(node.left) == -1):  # Left right case
                 node.left = self._rotate_left(node.left)  # reduce to left left case
             #left left case
             return self._rotate_right(node)
-        else:
-            if self._balance(node) == -2:
+        elif current_node_balance == -2:
                 if(self._balance(node.right) == 1):  # right left case
                     node.right = self._rotate_right(node.right)  # reduce to right right case
                 #right right case
                 return self._rotate_left(node)
+        else:
+            return node
 
     def _rotate_left(self, node):
         right_child= node.right

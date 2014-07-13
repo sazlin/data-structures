@@ -213,8 +213,9 @@ def test_avl_3(degenerate_bst):
 def test_avl_4(optimal_bst):
     #Show avl() in action for insert
     bst = optimal_bst
-    bst.insert(15)
-    bst.insert(12)
+    bst.insert(15, balance=True)
+    bst.insert(12, balance=True)
+    #bst._avl(bst.root.right.right)
     expected = [6, 4, 8, 2, 5, 7, 12, 9, 15]
     actual = [item for item in bst.breadth_first()]
     assert expected == actual
@@ -223,8 +224,9 @@ def test_avl_4(optimal_bst):
 def test_avl_5(optimal_bst):
     #show avl() in action for delete
     bst = optimal_bst
-    bst.insert(15)
-    bst.delete(7)
+    bst.insert(15, balance=True)
+    bst.delete(7, balance=True)
+    bst.avl()
     expected = [6, 4, 9, 2, 5, 8, 15]
     actual = [item for item in bst.breadth_first()]
     assert expected == actual
