@@ -149,7 +149,7 @@ def test_bf_3(degenerate_bst):
 
 
 def test_delete_node_1(empty_bst):
-    bst= empty_bst
+    bst = empty_bst
     assert bst.delete(777) is None
 
 
@@ -161,9 +161,9 @@ def test_delete_node_2(optimal_bst):
     assert bst.contains(leaf_test_val)
     assert bst.contains(non_leaf_test_val)
     assert bst.delete(leaf_test_val) is None
-    assert [val for val in bst.breadth_first()] == [6,4,8,2,5,9]
+    assert [val for val in bst.breadth_first()] == [6, 4, 8, 2, 5, 9]
     assert bst.delete(non_leaf_test_val) is None
-    assert [val for val in bst.breadth_first()] == [6,5,8,2,9]
+    assert [val for val in bst.breadth_first()] == [6, 5, 8, 2, 9]
 
 
 def test_delete_node_3(degenerate_bst):
@@ -173,7 +173,7 @@ def test_delete_node_3(degenerate_bst):
     assert bst.contains(leaf_test_val)
     assert bst.contains(non_leaf_test_val)
     assert bst.delete(leaf_test_val) is None
-    assert [val for val in bst.breadth_first()] == [6,4]
+    assert [val for val in bst.breadth_first()] == [6, 4]
     assert bst.delete(non_leaf_test_val) is None
     assert [val for val in bst.breadth_first()] == [4]
 
@@ -203,19 +203,19 @@ def test_avl_2(optimal_bst):
 
 
 def test_avl_3(degenerate_bst):
-    #Show that a simple degenerate tress is balanced with avl()
+    #Show that a simple degenerate tree is balanced with avl()
     bst = degenerate_bst
     expected = [4, 2, 6]
     bst.avl()
     actual = [item for item in bst.breadth_first()]
     assert expected == actual
 
+
 def test_avl_4(optimal_bst):
     #Show avl() in action for insert
     bst = optimal_bst
     bst.insert(15, balance=True)
     bst.insert(12, balance=True)
-    #bst._avl(bst.root.right.right)
     expected = [6, 4, 8, 2, 5, 7, 12, 9, 15]
     actual = [item for item in bst.breadth_first()]
     assert expected == actual
@@ -226,10 +226,16 @@ def test_avl_5(optimal_bst):
     bst = optimal_bst
     bst.insert(15, balance=True)
     bst.delete(7, balance=True)
-    bst.avl()
     expected = [6, 4, 9, 2, 5, 8, 15]
     actual = [item for item in bst.breadth_first()]
     assert expected == actual
+
+
+def test_avl_6():
+    bst = BinarySearchTree([6, 5, 4, 3, 2, 1], balance=True)
+    expected = [3, 2, 5, 1, 4, 6]
+    actual = [item for item in bst.breadth_first()]
+    assert actual == expected
 
 
 def test_rotate_left_1(empty_bst):
@@ -246,6 +252,7 @@ def test_rotate_left_1(empty_bst):
     assert new_root.left.right is None
     assert new_root.right.left is None
     assert new_root.right.right.value == 10
+
 
 def test_rotate_right_1(empty_bst):
     bst = empty_bst

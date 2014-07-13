@@ -19,11 +19,11 @@ class BSTNode(object):
 
 class BinarySearchTree(object):
 
-    def __init__(self, values=None):
+    def __init__(self, values=None, balance=False):
         self._size = 0
         self.root = None
         if values:
-            [self.insert(val) for val in values]
+            [self.insert(val, balance) for val in values]
 
     def size(self):
         return self._size
