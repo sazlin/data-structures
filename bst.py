@@ -97,8 +97,37 @@ class BinarySearchTree(object):
             ret_val -= self._depth(1, node.right)
         return ret_val
 
+    def avl(self):
+        self._avl(self.root)
+
+    def _avl(self, node):
+        #source: http://en.wikipedia.org/wiki/AVL_tree
+        if(self._balance(node) == 2):
+            if(self._balance(node.left) == -1):  # Left right case
+                node.left = self._rotate_left(node.left)  # reduce to left left case
+            #left left case
+            return self._rotate_right(node)
+        else:
+            if self._balance(node) == -2:
+                if(self._balance(node.right) == 1):  # right left case
+                    node.right = self._rotate_right(node.right)  # reduce to right right case
+                #right right case
+                return self._rotate_left(node)
+
+    def _rotate_left(self, node):
+        right_child= node.right
+        node.right = right_child.left
+        right_child.left = node
+        return right_child
+
+    def _rotate_right(self, node):
+        left_child = node.left
+        node.left = left_child.right
+        left_child.right = node
+        return left_child
+
     def pre_order(self):
-            return self._pre_order(self.root)
+        return self._pre_order(self.root)
 
     def _pre_order(self, node):
         if node:

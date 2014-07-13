@@ -228,3 +228,47 @@ def test_avl_5(optimal_bst):
     expected = [6, 4, 9, 2, 5, 8, 15]
     actual = [item for item in bst.breadth_first()]
     assert expected == actual
+
+def test_rotate_left_1(empty_bst):
+    bst = empty_bst
+    bst.insert(4)
+    bst.insert(6)
+    bst.insert(8)
+    new_root = bst._rotate_left(bst.root)
+    assert new_root.value == 6
+    assert new_root.left.value == 4
+    assert new_root.right.value == 8
+    assert new_root.left.left is None
+    assert new_root.left.right is None
+    assert new_root.right.left is None
+    assert new_root.right.right is None
+
+def test_rotate_left_1(empty_bst):
+    bst = empty_bst
+    bst.insert(4)
+    bst.insert(6)
+    bst.insert(8)
+    bst.insert(10)
+    new_root = bst._rotate_left(bst.root)
+    assert new_root.value == 6
+    assert new_root.left.value == 4
+    assert new_root.right.value == 8
+    assert new_root.left.left is None
+    assert new_root.left.right is None
+    assert new_root.right.left is None
+    assert new_root.right.right.value == 10
+
+def test_rotate_right_1(empty_bst):
+    bst = empty_bst
+    bst.insert(8)
+    bst.insert(6)
+    bst.insert(4)
+    bst.insert(1)
+    new_root = bst._rotate_right(bst.root)
+    assert new_root.value == 6
+    assert new_root.left.value == 4
+    assert new_root.right.value == 8
+    assert new_root.left.left.value == 1
+    assert new_root.left.right is None
+    assert new_root.right.left is None
+    assert new_root.right.right is None
