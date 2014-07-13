@@ -159,24 +159,24 @@ class BinarySearchTree(object):
                 return node.value
 
         if not node:
-            #no child here, so return
+            # no child here, so return
             return None
 
-        if node.value ==  val:
+        if node.value == val:
             self._size -= 1
             if node.left and node.right:
-                #both left and right children exist
+                # both left and right children exist
                 node.value = _min_val(node.right)
                 node.right = self._delete(node.value, node.right)
                 return node
             elif node.left and not node.right:
-                #only left child exists
+                # only left child exists
                 return node.left
             elif not node.left and node.right:
-                #only right child exists
+                # only right child exists
                 return node.right
             else:
-                #no children
+                # no children
                 return None
         elif node.value < val:
             if node.right:
@@ -192,14 +192,17 @@ if __name__ == '__main__':
     test_runs = 100000
 
     balanced_time = timeit.timeit('''
-    balanced_contents = [50, 40, 60, 35, 45, 55, 65, 31, 39, 41, 49, 51, 59, 61, 69]
+    balanced_contents = [
+        50, 40, 60, 35, 45, 55, 65, 31, 39, 41, 49, 51, 59, 61, 69]
     BinarySearchTree(balanced_contents).contains(69)
     ''', setup="from __main__ import BinarySearchTree", number=test_runs)
 
     unbalanced_time = timeit.timeit('''
-    unbalanced_contents = [31, 35, 39, 40, 41, 45, 49, 50, 51, 55, 59, 60, 61, 65, 69]
+    unbalanced_contents = [
+        31, 35, 39, 40, 41, 45, 49, 50, 51, 55, 59, 60, 61, 65, 69]
     BinarySearchTree(unbalanced_contents).contains(69)
     ''', setup="from __main__ import BinarySearchTree", number=test_runs)
 
     print "Time for a balanced tree (best case) is: {}\n".format(balanced_time)
-    print "Time for an unbalanced tree (worst case) is: {}\n".format(unbalanced_time)
+    print "Time for an unbalanced tree (worst case) is: {}\n".format(
+        unbalanced_time)
