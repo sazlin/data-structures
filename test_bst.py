@@ -89,6 +89,26 @@ def test_post_order_2(optimal_bst):
     assert actual == expected
 
 
+def test_pre_order_1(empty_bst):
+    bst = empty_bst
+    with pytest.raises(StopIteration):
+        bst.pre_order().next()
+
+
+def test_pre_order_2(optimal_bst):
+    bst = optimal_bst
+    expected = [6, 4, 2, 5, 8, 7, 9]
+    actual = [i for i in bst.pre_order()]
+    assert actual == expected
+
+
+def test_pre_order_3(degenerate_bst):
+    bst = degenerate_bst
+    expected = [6, 4, 2]
+    actual = [i for i in bst.pre_order()]
+    assert actual == expected
+
+
 def test_in_order_1(empty_bst):
     bst = empty_bst
     expected = []
