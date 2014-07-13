@@ -147,6 +147,7 @@ def test_bf_3(degenerate_bst):
     actual = [item for item in degenerate_bst.breadth_first()]
     assert expected == actual
 
+
 def test_delete_node_1(empty_bst):
     bst= empty_bst
     assert bst.delete(777) is None
@@ -164,6 +165,7 @@ def test_delete_node_2(optimal_bst):
     assert bst.delete(non_leaf_test_val) is None
     assert [val for val in bst.breadth_first()] == [6,5,8,2,9]
 
+
 def test_delete_node_3(degenerate_bst):
     bst = degenerate_bst
     leaf_test_val = 2
@@ -175,6 +177,7 @@ def test_delete_node_3(degenerate_bst):
     assert bst.delete(non_leaf_test_val) is None
     assert [val for val in bst.breadth_first()] == [4]
 
+
 def test_delete_node_4(degenerate_bst):
     bst = degenerate_bst
     test_val = 777
@@ -183,3 +186,45 @@ def test_delete_node_4(degenerate_bst):
     assert bst.delete(777) is None
     after_delete = [val for val in bst.in_order()]
     assert before_delete == after_delete
+
+
+def test_avl_1(empty_bst):
+    bst = empty_bst
+    assert not bst.avl()
+
+
+def test_avl_2(optimal_bst):
+    #Show that avl() doesn't change an already balanced tree
+    bst = optimal_bst
+    expected = [6, 4, 8, 2, 5, 7, 9]
+    bst.avl()
+    actual = [item for item in bst.breadth_first()]
+    assert actual == expected
+
+
+def test_avl_3(degenerate_bst):
+    #Show that a simple degenerate tress is balanced with avl()
+    bst = degenerate_bst
+    expected = [4, 2, 6]
+    bst.avl()
+    actual = [item for item in bst.breadth_first()]
+    assert expected == actual
+
+def test_avl_4(optimal_bst):
+    #Show avl() in action for insert
+    bst = optimal_bst
+    bst.insert(15)
+    bst.insert(12)
+    expected = [6, 4, 8, 2, 5, 7, 12, 9, 15]
+    actual = [item for item in bst.breadth_first()]
+    assert expected == actual
+
+
+def test_avl_5(optimal_bst):
+    #show avl() in action for delete
+    bst = optimal_bst
+    bst.insert(15)
+    bst.delete(7)
+    expected = [6, 4, 9, 2, 5, 8, 15]
+    actual = [item for item in bst.breadth_first()]
+    assert expected == actual
