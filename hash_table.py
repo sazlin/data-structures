@@ -5,7 +5,7 @@ class HashTable(object):
         self._list_size = size
         self._bucket_list = [[] for bucket in xrange(0, size)]
 
-    def _hash(self, key):
+    def hash(self, key):
         if not isinstance(key, basestring):
             raise TypeError("key must take a string")
         sum_ord = 0
@@ -14,7 +14,7 @@ class HashTable(object):
         return sum_ord % self._list_size
 
     def set(self, key, value):
-        hash = self._hash(key)
+        hash = self.hash(key)
         for item in self._bucket_list[hash]:
             if item[0] == key:
                 item[1] == value
@@ -22,10 +22,8 @@ class HashTable(object):
         self._bucket_list[hash].append((key, value))
 
     def get(self, key):
-        hash = self._hash(key)
-        for item in self_bucket_list[hash]:
+        hash = self.hash(key)
+        for item in self._bucket_list[hash]:
             if item[0] == key:
                 return item[1]
-
-
-
+        raise KeyError("key not found in hash table")
