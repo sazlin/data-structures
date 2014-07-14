@@ -65,7 +65,11 @@ Both shortest path algorithms follow Wikipedia's pseudocode fairly closely.
 Description TBD
 
 ###Hash Table
-Description TBD
+A simple hash table implementation using a list of buckets. Each bucket is a list of key, value tuples where the key was hashed to the same index. Our hash table has 4 methods:
+* __init__(size=1024): creates a hashtable of size 1024 by default. The size can be set manually.
+* set(key, value): adds the key and value as a tuple to the bucket found at the _hash(key) index of the hash table's bucket list. If the key is already present in the bucket then that key's value is overwritten with the new value. Set is O(1) except for when collisions occur, then set() is O(N) where N is the number of keys already present in that bucket.
+* get(key): returns the value associated with this key. If the key is not found in the _hash(key) bucket then a KeyError is raised. get() is O(1) except when collisions occur, then get() is O(N) where N is the number of keys present in that bucket.
+* _hash(key): A very simple hash function that generates a bucket index using a given key. Key is generated using the sum of the ord() of each character in the key string and then modding the sum with the size of the hashtable. This is a very simple implementation of a hash function that results in collisions often for lots of strings, especially strings that are anagrams of eachother. Key must be an instance of basestring, else a TypeError will be raised. Because a for-loop is used to iterate over the chars in a key string, _hash() is O(N) where N is the number of characters in the key string. 
 
 ### Sources and inspirations:
 * Python Reference Docs on Data Structures (https://docs.python.org/2/tutorial/datastructures.html)
