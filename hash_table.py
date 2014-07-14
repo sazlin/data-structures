@@ -17,9 +17,9 @@ class HashTable(object):
         hash = self.hash(key)
         for item in self._bucket_list[hash]:
             if item[0] == key:
-                item[1] == value
+                item[1] = value
                 return
-        self._bucket_list[hash].append((key, value))
+        self._bucket_list[hash].append([key, value])
 
     def get(self, key):
         hash = self.hash(key)

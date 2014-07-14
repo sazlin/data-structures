@@ -42,11 +42,12 @@ def test_set(empty_table):
     table.set('a', 3)
     table.set('A', 4)
     table.set('Hello World!', 5)
-    assert table._bucket_list[448][0] == ('test', 1)
-    assert table._bucket_list[448][1] == ('sett', 2)
-    assert table._bucket_list[97][0] == ('a', 3)
-    assert table._bucket_list[65][0] == ('A', 4)
-    assert table._bucket_list[61][0] == ('Hello World!', 5)
+    table.set('Hello World!', 6)
+    assert table._bucket_list[448][0] == ['test', 1]
+    assert table._bucket_list[448][1] == ['sett', 2]
+    assert table._bucket_list[97][0] == ['a', 3]
+    assert table._bucket_list[65][0] == ['A', 4]
+    assert table._bucket_list[61][0] == ['Hello World!', 6]
     with pytest.raises(TypeError):
         empty_table.set(9, 9)
 
@@ -65,6 +66,8 @@ def test_get(empty_table):
     assert table.get('Hello World!') == 5
     with pytest.raises(KeyError):
         table.get("not there")
+    with pytest.raises(TypeError):
+        table.get(9)
 
 
 def test_big_table(word_list):
