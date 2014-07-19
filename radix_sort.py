@@ -30,6 +30,7 @@ def radix_sort_strings(strings):
             except IndexError as x:
                 bucket_index = 0
             sorting_buckets[bucket_index].append(s)
+        #flatten the list of lists
         sorted_strings = list(chain.from_iterable(sorting_buckets))
         cur_digit -= 1
     return sorted_strings
