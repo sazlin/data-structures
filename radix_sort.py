@@ -34,25 +34,50 @@ def radix_sort_strings(strings):
         cur_digit -= 1
     return sorted_strings
 
-# def radix_sort_strings(strings):
-#     num_chars = max(len(s) for s in strings)
-#     sorted_strings = list(strings)
-#     offset = ord('A')
-#     for char_pos in range(num_chars):
-#         print "# of buckets: ", str(ord('z') - offset )
-#         sorting_buckets = [[] for i in range( ord('z') - offset )]
-#         for string in sorted_strings:
-#             bucket_index = ord(string[char_pos]) - offset
-#             print bucket_index
-#             sorting_buckets[bucket_index-1].append(string)
-#         sorted_strings = list(chain.from_iterable(sorting_buckets))
-#     return sorted_strings
 
 if __name__ == '__main__':
-    #worst case
-    worst_case = [998765432123456789, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-    sorted_worst_case = radix_sort_int(worst_case)
-    #print sorted_worst_case
+    import timeit
+    #worst case - integer
+    t = timeit.timeit(
+        setup="""
+from radix_sort import radix_sort_int
+list_of_ints = [ i for i in range(1000, 0, -1)]
+list_of_ints.append(9999999999999999999999999999999999999)
+""",
+        stmt="radix_sort_int(list_of_ints)",
+        number=100)
+    print "Radix_sort_int | Worst Case |", t
+
+    #best case - integer
+    t = timeit.timeit(
+        setup="""
+from radix_sort import radix_sort_int
+list_of_ints = [ i for i in range(0, 1000, 1)]
+""",
+        stmt="radix_sort_int(list_of_ints)",
+        number=100)
+    print "Radix_sort_int | Best Case |", t
+
+    #worst case - string
+    t = timeit.timeit(
+        setup="""
+from radix_sort import radix_sort_strings
+list_of_strings = [chr(c) * 20 for c in range(ord('z'), ord('a')-1, -1)]
+list_of_strings.append('z'*100)
+""",
+        stmt="radix_sort_strings(list_of_strings)",
+        number=100)
+    print "Radix_sort_string | Worst Case |", t
+
+        #worst case - string
+    t = timeit.timeit(
+        setup="""
+from radix_sort import radix_sort_strings
+list_of_strings = [chr(c) * 20 for c in range(ord('a')-1, ord('z'), 1)]
+""",
+        stmt="radix_sort_strings(list_of_strings)",
+        number=100)
+    print "Radix_sort_string | Best Case |", t
 
     #semi random case
     random_case = [
