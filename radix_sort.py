@@ -79,30 +79,3 @@ list_of_strings = [chr(c) * 20 for c in range(ord('a')-1, ord('z'), 1)]
         stmt="radix_sort_strings(list_of_strings)",
         number=100)
     print "Radix_sort_string | Best Case |", t
-
-    #semi random case
-    random_case = [
-        567756765,356734345345,
-        5934534,
-        1,
-        2,
-        6234234,
-        44324,
-        345345238,
-        4564565,
-        02424]
-    sorted_random_case = radix_sort_int(random_case)
-    #print sorted_random_case
-
-    #best case
-    best_case = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-    sorted_best_case = radix_sort_int(best_case)
-    #print sorted_best_case
-
-    #simple case
-    simple_case = ['z', 'x', 'g', 'b', 'a', 'b']
-    print radix_sort_strings(simple_case)
-
-     #worst case
-    worst_case = ['zzzzzzz', 'xxxxxxxx', 'xxxxxaxx', 'ca', 'c', 'bbbbbb']
-    print radix_sort_strings(worst_case)
