@@ -16,3 +16,9 @@ def test_quick_sort_2():
     expected = list(case_1)
     expected.sort()
     assert quick_sort(case_1) == expected
+
+
+def test_quick_sort_3():
+    case_1 = [5 for i in xrange(50)]
+    expected = list(case_1)
+    assert quick_sort(case_1) == expected
