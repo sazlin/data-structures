@@ -69,7 +69,7 @@ def test_get(empty_table):
     with pytest.raises(TypeError):
         table.get(9)
 
-
+@slow
 def test_big_table(word_list):
     table = HashTable(4096)
     [table.set(word, word) for word in word_list]
