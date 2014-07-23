@@ -20,7 +20,6 @@ def merge(a, lo, hi):
     l_idx = lo
     r_idx = mid+1
     tmp = []
-    tmp_idx = 0
     while (l_idx <= mid) and (r_idx <= hi):
         if a[l_idx] < a[r_idx]:
             tmp.append(a[l_idx])
@@ -28,17 +27,14 @@ def merge(a, lo, hi):
         else:
             tmp.append(a[r_idx])
             r_idx += 1
-        tmp_idx += 1
 
     # copy remaining values from left list into tmp
     for j in xrange(l_idx, mid+1):
         tmp.append(a[j])
-        tmp_idx += 1
 
     # copy remaining values from right list into tmp
     for j in xrange(r_idx, hi+1):
         tmp.append(a[j])
-        tmp_idx += 1
 
     # copy tmp back into a
     for j in xrange(lo, hi+1):
