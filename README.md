@@ -64,6 +64,18 @@ Both shortest path algorithms follow Wikipedia's pseudocode fairly closely.
 ###Binary Search Tree
 Description TBD
 
+###Radix Sort
+Description TBD
+
+###Insertion Sort
+Description TBD
+
+###Merge Sort
+Description TBD
+
+###Quick Sort
+Description TBD
+
 ###Hash Table
 A simple hash table implementation using a list of buckets. Each bucket is a list of key, value tuples where the key was hashed to the same index. Our hash table has 4 methods:
 * __init__(size=1024): creates a hashtable of size 1024 by default. The size can be set manually.
